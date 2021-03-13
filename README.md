@@ -1,6 +1,19 @@
 # motoko uprising new
 motoko uprising line following robot
 
+# structure
+ 
+ * src
+    * firmware - robot main firmware
+    * robot_debug_py - debug application
+    * TODO gym-line_follower - AI gym env for reinforcement learning
+    * TODO rl_train - run training
+
+* hardware
+    * eagle files
+    * gerber outputs
+    * stl for 3D printed parts
+
 
 # hardware
 
