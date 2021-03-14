@@ -2,6 +2,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.egg-info
 
 __pypackages__/
 
@@ -11,3 +12,4 @@ __pypackages__/
 *.bin
 *.asm
 *.elf
+*.hex

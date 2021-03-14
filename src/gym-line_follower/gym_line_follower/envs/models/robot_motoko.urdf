@@ -1,0 +1,417 @@
+<?xml version="1.0"?>
+<robot name="line_follower">
+
+    <material name="red">
+        <color rgba="1 0 0 1"/>
+    </material>
+
+    <material name="blue">
+        <color rgba="0 0 1 1"/>
+    </material>
+  
+    <material name="green">
+        <color rgba="0 1 0 1"/>
+    </material>  
+
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
+
+
+  
+  
+	<link name="main_board_0">
+    	<visual>
+      		<geometry>
+        		<box size="0.047 0.064 0.0025"/>
+      		</geometry>
+            <material name ="blue"/>
+		  </visual>
+  
+  		<collision>
+        	<geometry>
+        		<box size="0.047 0.064 0.0025"/>
+            </geometry>
+        </collision>
+
+        <contact>
+          <lateral_friction value="0.0"/>
+          <rolling_friction value="0.0"/>
+          <stiffness value="300000"/>
+          <damping value="1000"/>
+        </contact>
+  
+   		  <inertial>
+            <mass value="0.053"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="6e-4"/>
+        </inertial>
+	</link>
+
+
+	<link name="main_board_1">
+    	<visual>
+      		<geometry>
+         		<box size="0.011 0.088 0.0025"/>
+      		</geometry>
+          	<material name ="blue"/>
+    	</visual>
+
+
+	    <collision>
+        	<geometry>
+        		<box size="0.011 0.088 0.0025"/>
+            </geometry>
+        </collision>
+
+        <contact>
+          <lateral_friction value="0.0"/>
+          <rolling_friction value="0.0"/>
+          <stiffness value="300000"/>
+          <damping value="1000"/>
+        </contact>
+  
+   		<inertial>
+            <mass value="0.02"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="6e-4"/>
+        </inertial>
+	</link>
+
+
+
+    <link name="main_board_left_a">
+    	<visual>
+      		<geometry>
+         		<box size="0.04 0.005 0.0025"/>
+      		</geometry>
+          	<material name ="blue"/>
+    	</visual>
+
+	    <collision>
+        	<geometry>
+        		<box size="0.04 0.005 0.0025"/>
+            </geometry>
+        </collision>
+
+        <contact>
+          <lateral_friction value="0.0"/>
+          <rolling_friction value="0.0"/>
+          <stiffness value="300000"/>
+          <damping value="1000"/>
+        </contact>
+  
+   		<inertial>
+            <mass value="0.0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="6e-4"/>
+        </inertial>
+	</link>
+
+
+
+	<link name="main_board_left_b">
+    	<visual>
+      		<geometry>
+         		<box size="0.02 0.005 0.0025"/>
+      		</geometry>
+          	<material name ="blue"/>
+    	</visual>
+
+	    <collision>
+        	<geometry>
+        		<box size="0.02 0.005 0.0025"/>
+            </geometry>
+        </collision>
+
+        <contact>
+          <lateral_friction value="0.0"/>
+          <rolling_friction value="0.0"/>
+          <stiffness value="300000"/>
+          <damping value="1000"/>
+        </contact>
+  
+   		<inertial>
+            <mass value="0.0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="6e-4"/>
+        </inertial>
+	</link>
+
+
+
+
+    <link name="main_board_right_a">
+    	<visual>
+      		<geometry>
+         		<box size="0.04 0.005 0.0025"/>
+      		</geometry>
+          	<material name ="blue"/>
+    	</visual>
+
+	    <collision>
+        	<geometry>
+        		<box size="0.04 0.005 0.0025"/>
+            </geometry>
+        </collision>
+
+        <contact>
+          <lateral_friction value="0.0"/>
+          <rolling_friction value="0.0"/>
+          <stiffness value="300000"/>
+          <damping value="1000"/>
+        </contact>
+  
+   		<inertial>
+            <mass value="0.0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="6e-4"/>
+        </inertial>
+	</link>
+
+
+
+	<link name="main_board_right_b">
+    	<visual>
+      		<geometry>
+         		<box size="0.02 0.005 0.0025"/>
+      		</geometry>
+          	<material name ="blue"/>
+    	</visual>
+
+	    <collision>
+        	<geometry>
+        		<box size="0.02 0.005 0.0025"/>
+            </geometry>
+        </collision>
+
+        <contact>
+          <lateral_friction value="0.0"/>
+          <rolling_friction value="0.0"/>
+          <stiffness value="300000"/>
+          <damping value="1000"/>
+        </contact>
+  
+   		<inertial>
+            <mass value="0.0"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="6e-4"/>
+        </inertial>
+	</link>
+
+
+  <link name="front_left">
+    	<visual>
+      		<geometry>
+         		<box size="0.022 0.008 0.01"/>
+      		</geometry>
+            <material name ="red"/>
+    	</visual>
+
+ 		<collision>
+			<geometry>
+         		<box size="0.022 0.008 0.01"/>
+      		</geometry>
+        </collision>
+
+        <contact>
+          <lateral_friction value="0.0"/>
+          <rolling_friction value="0.0"/>
+          <stiffness value="10000000"/>
+          <damping value="10000"/>
+        </contact>
+
+        <inertial>
+            <mass value="0.0005"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="6e-4"/>
+        </inertial>
+	</link>
+
+
+	<link name="front_right">
+    	<visual>
+      		<geometry>
+         		<box size="0.022 0.008 0.01"/>
+      		</geometry>
+            <material name ="red"/>
+    	</visual>
+
+ 		<collision>
+			<geometry>
+         		<box size="0.022 0.008 0.01"/>
+      		</geometry>
+        </collision>
+
+        <contact>
+          <lateral_friction value="0.0"/>
+          <rolling_friction value="0.0"/>
+          <stiffness value="10000000"/>
+          <damping value="10000"/>
+        </contact>
+
+        <inertial>
+            <mass value="0.0005"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="6e-4"/>
+        </inertial>
+	</link>
+
+
+  <link name="accu">
+    	<visual>
+      		<geometry>
+         		<box size="0.012 0.036 0.01"/>
+      		</geometry>
+          	<material name ="red"/>
+    	</visual>
+
+
+	    <collision>
+        	<geometry>
+         		<box size="0.012 0.036 0.01"/>
+          </geometry>
+      </collision>
+
+        <contact>
+          <lateral_friction value="0.0"/>
+          <rolling_friction value="0.0"/>
+          <stiffness value="300000"/>
+          <damping value="1000"/>
+        </contact>
+  
+   		<inertial>
+            <mass value="0.01"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="6e-4"/>
+        </inertial>
+	</link>
+
+
+
+	<link name="left_wheel">
+        <visual>
+            <geometry>
+                <cylinder length="0.012" radius="0.015"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.012" radius="0.015"/>
+            </geometry>
+        </collision>
+
+        <contact>
+          <lateral_friction value="0.6"/>
+          <rolling_friction value="0.0"/>
+          <stiffness value="300000"/>
+          <damping value="1000"/>
+        </contact>
+
+
+        <inertial>
+            <mass value="0.01"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="1e-6"/>
+        </inertial>
+    </link>
+
+    
+
+	<link name="right_wheel">
+        <visual>
+            <geometry>
+                <cylinder length="0.012" radius="0.015"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+            <geometry>
+                <cylinder length="0.012" radius="0.015"/>
+            </geometry>
+        </collision>
+
+        <contact>
+          <lateral_friction value="0.6"/>
+          <rolling_friction value="0.0"/>
+          <stiffness value="300000"/>
+          <damping value="1000"/>
+        </contact>
+
+        <inertial>
+            <mass value="0.01"/>
+            <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="1e-6"/>
+        </inertial>
+    </link>
+
+
+
+
+
+
+
+
+	<joint name="main_board_0_left_wheel" type="continuous">
+    <parent link="main_board_0"/>
+    <child link="left_wheel"/>
+    <origin rpy="-1.5708 0.0 0" xyz="0.0 0.041 0.0025"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+
+  <joint name="main_board_0_right_wheel" type="continuous">
+    <parent link="main_board_0"/>
+    <child link="right_wheel"/>
+    <origin rpy="1.5708 0.0 0" xyz="0.0 -0.041 0.0025"/>
+    <axis xyz="0 0 -1"/>
+  </joint>
+
+
+
+
+	<joint name="main_board_0_main_board_1" type="fixed">
+		<parent link="main_board_0"/>
+		<child link="main_board_1"/>
+    <origin rpy="0 0 0" xyz="0.067 0.0 0.0"/>
+ 	</joint>
+
+
+<joint name="main_board_1_front_0" type="fixed">
+		<parent link="main_board_1"/>
+		<child link="front_left"/>
+    <origin rpy="0 -0.3 0" xyz="0.0 0.044 -0.005"/>
+ 	</joint>
+
+	<joint name="main_board_1_front_1" type="fixed">
+		<parent link="main_board_1"/>
+		<child link="front_right"/>
+    <origin rpy="0 -0.3 0" xyz="0.0 -0.044 -0.005"/>
+ 	</joint>
+
+
+
+
+
+  <joint name="main_board_0_accu" type="fixed">
+		<parent link="main_board_0"/>
+		<child link="accu"/>
+    <origin rpy="0.0 0 0" xyz="0.015 0.0 0.005"/>
+ 	</joint>
+
+
+  <joint name="main_board_0_main_board_left_a" type="fixed">
+		<parent link="main_board_0"/>
+		<child link="main_board_left_a"/>
+    <origin rpy="0 0 0" xyz="0.045 0.042 0.0"/>
+ 	</joint>
+
+  <joint name="main_board_0_main_board_left_b" type="fixed">
+		<parent link="main_board_0"/>
+		<child link="main_board_left_b"/>
+    <origin rpy="0 0 0.785" xyz="0.021 0.035 0.0"/>
+ 	</joint>
+
+  <joint name="main_board_0_main_board_right_a" type="fixed">
+		<parent link="main_board_0"/>
+		<child link="main_board_right_a"/>
+    <origin rpy="0 0 0" xyz="0.045 -0.042 0.0"/>
+ 	</joint>
+
+  <joint name="main_board_0_main_board_right_b" type="fixed">
+		<parent link="main_board_0"/>
+		<child link="main_board_right_b"/>
+    <origin rpy="0 0 -0.785" xyz="0.021 -0.035 0.0"/>
+ 	</joint>
+
+</robot>
