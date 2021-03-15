@@ -13,4 +13,4 @@ class Config():
 
         self.exploration   = RLAgents.DecayConst(0.1, 0.1)
 
-        self.experience_replay_size = 1000 #200000
+        self.experience_replay_size = 200000

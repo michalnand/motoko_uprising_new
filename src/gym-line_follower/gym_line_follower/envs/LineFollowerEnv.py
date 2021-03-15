@@ -33,7 +33,7 @@ class Config:
         self.no_load_speed          = 1000*2.0*numpy.pi/60.0   #1000rpm, converted into rad/s
         self.stall_torque           = 0.57*0.09807             #0.57kg.cm, converted into Nm
 
-        self.sequence_length    = 256
+        self.sequence_length        = 64
         
         
      
