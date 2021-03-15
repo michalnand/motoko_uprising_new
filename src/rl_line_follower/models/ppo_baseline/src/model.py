@@ -6,8 +6,8 @@ class Model(torch.nn.Module):
     def __init__(self, input_shape, outputs_count):
         super(Model, self).__init__()
 
-        #self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-        self.device = "cpu"
+        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        #self.device = "cpu"
         
         hidden_size = 128
         

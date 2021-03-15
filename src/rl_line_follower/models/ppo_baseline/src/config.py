@@ -8,6 +8,6 @@ class Config():
         self.batch_size             = 16
         
         self.training_epochs        = 4
-        self.actors                 = 16
+        self.actors                 = 1 #16
         
         self.learning_rate          = 0.00025
