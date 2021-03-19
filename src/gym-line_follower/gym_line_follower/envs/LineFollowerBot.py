@@ -40,8 +40,8 @@ class LineFollowerBot:
 
         self.left_velocity, self.right_velocity = self.get_wheel_velocity()
 
-        left_torque     = self.left_motor.get_torque(left_voltage, self.left_velocity)
-        right_torque    = self.right_motor.get_torque(right_voltage, self.right_velocity)
+        left_torque     = self.left_motor.step(left_voltage, self.left_velocity)
+        right_torque    = self.right_motor.step(right_voltage, self.right_velocity)
 
       
         self.set_wheel_torque(left_torque, right_torque)
@@ -63,7 +63,7 @@ class LineFollowerBot:
     def get_wheel_velocity(self):
         l_pos, l_vel, l_react, l_torque = self.pb_client.getJointState(self.bot_model, self.left_wheel_joint)
         r_pos, r_vel, r_react, r_torque = self.pb_client.getJointState(self.bot_model, self.right_wheel_joint)
-        return l_vel, r_vel
+        return l_vel*60.0/(2.0*numpy.pi), r_vel*60.0/(2.0*numpy.pi)
 
     def get_position(self):
         position, orientation = self.pb_client.getBasePositionAndOrientation(self.bot_model)

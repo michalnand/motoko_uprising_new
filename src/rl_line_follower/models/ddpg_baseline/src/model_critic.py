@@ -5,14 +5,15 @@ class Model(torch.nn.Module):
     def __init__(self, input_shape, outputs_count, hidden_size = 128):
         super(Model, self).__init__()
 
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        #self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = "cpu"
                 
         self.model_features = nn.GRU(input_size=input_shape[1], hidden_size=hidden_size, batch_first=True)
             
         self.layers_output = [
             nn.Linear(hidden_size + outputs_count, hidden_size),
             nn.ReLU(),                       
-            nn.Linear(hidden_size, outputs_count)
+            nn.Linear(hidden_size, outputs_count) 
         ] 
 
         torch.nn.init.xavier_uniform_(self.layers_output[0].weight)

@@ -1,9 +1,9 @@
+import gym
+import gym_line_follower
 import time
-import line_follower_env
-
 import numpy
 
-env = line_follower_env.LineFollowerEnv()
+env = gym.make("LineFollower-v0")
 
 
 target_left = 1.0

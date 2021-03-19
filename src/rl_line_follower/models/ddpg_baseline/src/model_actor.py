@@ -34,17 +34,18 @@ class NoisyLinearFull(torch.nn.Module):
 
 
 class Model(torch.nn.Module):
-    def __init__(self, input_shape, outputs_count, hidden_size = 128):
+    def __init__(self, input_shape, outputs_count, hidden_size = 64):
         super(Model, self).__init__()
 
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        #self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        self.device = "cpu"
                 
         self.model_features = nn.GRU(input_size=input_shape[1], hidden_size=hidden_size, batch_first=True)
             
         self.layers_output = [
-            NoisyLinearFull(hidden_size, hidden_size//2), 
+            NoisyLinearFull(hidden_size, hidden_size), 
             nn.ReLU(),                       
-            NoisyLinearFull(hidden_size//2, outputs_count),
+            NoisyLinearFull(hidden_size, outputs_count),
             nn.Tanh() 
         ] 
 

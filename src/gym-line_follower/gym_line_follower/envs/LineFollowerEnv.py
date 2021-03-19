@@ -27,25 +27,22 @@ class Config:
 
         #robot parameters
         self.robot_sensors_brace    = 0.035
-        self.supply_voltage         = 8                        #8Volts main battery
+        self.supply_voltage         = 8         #8Volts main battery
 
-        self.nominal_voltage        = 6                        #6Volts motors
-        self.no_load_speed          = 1000*2.0*numpy.pi/60.0   #1000rpm, converted into rad/s
-        self.stall_torque           = 0.57*0.09807             #0.57kg.cm, converted into Nm
+        self.nominal_voltage        = 6         #6Volts motors
+        self.no_load_speed          = 1000      #1000rpm
+        self.stall_torque           = 0.57      #0.57kg.cm, converted into Nm
 
         self.sequence_length        = 64
         
-        
-     
         '''
-        self.max_rpm           = rnd(500, 1500)
+        self.no_load_speed     = rnd(500, 1500)
         self.inertia           = rnd(0.6, 0.95)
         self.wheels_brace      = rnd(0.04, 0.2)
         self.sensors_distance  = rnd(0.04, 0.2)
         '''
 
-        #observation parameters
-        self.frame_stacking = 8
+
 
     def rnd(min_value, max_value):
         k = numpy.random.rand()
@@ -214,8 +211,8 @@ class LineFollowerEnv(gym.Env):
         velocity_left, velocity_right = self.robot_model.get_wheel_velocity()
 
         self.observation[-1][0] = numpy.clip(line_pos_raw, -self.config.robot_sensors_brace, self.config.robot_sensors_brace)/self.config.robot_sensors_brace
-        self.observation[-1][1] = velocity_left/100.0
-        self.observation[-1][2] = velocity_right/100.0
+        self.observation[-1][1] = velocity_left/self.config.no_load_speed
+        self.observation[-1][2] = velocity_right/self.config.no_load_speed
         
         if numpy.abs(line_pos_raw) < self.config.robot_sensors_brace:
             self.observation[-1][3] = 1.0
