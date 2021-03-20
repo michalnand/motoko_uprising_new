@@ -13,34 +13,28 @@ class Model(torch.nn.Module):
         
         self.model_features = nn.GRU(input_size=input_shape[1], hidden_size=hidden_size, batch_first=True)
             
-        self.layers_mu = [
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),                       
+        self.layers_mu = [                   
             nn.Linear(hidden_size, outputs_count),
             nn.Tanh()
         ]  
 
-        self.layers_var = [
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),                       
+        self.layers_var = [                 
             nn.Linear(hidden_size, outputs_count),
             nn.Softplus()
         ]  
 
-        self.layers_value = [
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),                      
+        self.layers_value = [               
             nn.Linear(hidden_size, 1)
         ]
 
         torch.nn.init.xavier_uniform_(self.layers_mu[0].weight)
-        torch.nn.init.xavier_uniform_(self.layers_mu[2].weight)
+        #torch.nn.init.xavier_uniform_(self.layers_mu[2].weight)
 
         torch.nn.init.xavier_uniform_(self.layers_var[0].weight)
-        torch.nn.init.xavier_uniform_(self.layers_var[2].weight)
+        #torch.nn.init.xavier_uniform_(self.layers_var[2].weight)
 
         torch.nn.init.xavier_uniform_(self.layers_value[0].weight)
-        torch.nn.init.xavier_uniform_(self.layers_value[2].weight)
+        #torch.nn.init.xavier_uniform_(self.layers_value[2].weight)
 
 
         self.model_features.to(self.device)
@@ -64,8 +58,8 @@ class Model(torch.nn.Module):
 
 
     def forward(self, state):
-        output, hn    = self.model_features(state)
-        features = hn[0]
+        output, hidden  = self.model_features(state)
+        features    = hidden[0]
 
         mu      = self.model_mu(features)
         var     = self.model_var(features)

@@ -5,6 +5,8 @@ import numpy
 
 env = gym.make("LineFollower-v0")
 
+state = env.reset()
+
 
 target_left = 1.0
 target_right = 1.0
@@ -12,18 +14,22 @@ target_right = 1.0
 left  = 0.0
 right = 0.0
 
-speed_max = 0.7
+speed_max = 0.5
 
 acc = 0.02
 
 fps = 0.0
 k = 0.05
 
+step = 0
 while True:
-    left = numpy.clip(left + acc, 0.0, speed_max)
-    right = numpy.clip(right + acc, 0.0, speed_max)
+    dif   = 0.1*state[-1][0] + 0.1*(state[-1][0] - state[-2][0])
+    left  = numpy.clip(dif + acc, 0.0, speed_max)
+    right = numpy.clip(-dif + acc, 0.0, speed_max)
     
-    env.render()
+    if step%10 == 0:
+        env.render()
+    step+= 1
 
     time_start = time.time()
     state, reward, done, _ = env.step([left, right])
@@ -31,11 +37,8 @@ while True:
 
     fps = (1.0 - k)*fps + k/(time_stop - time_start)
 
-    print("fps = ", fps)
-    print(state)
-    print(reward)
-    print(done)
-
+    print(step, reward, done)
+    
     if done:
         env.reset()
         left  = 0.0

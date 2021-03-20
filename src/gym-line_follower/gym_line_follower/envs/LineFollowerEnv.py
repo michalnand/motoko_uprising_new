@@ -107,7 +107,7 @@ class LineFollowerEnv(gym.Env):
         reward = 0.0
         done   = False
 
-        reward = (1.0 - numpy.abs(line_position))*0.1
+        reward = (1.0 - numpy.abs(line_position))*0.01
 
         if numpy.abs(line_pos_raw) > 3.0*self.config.robot_sensors_brace:
             done = True
