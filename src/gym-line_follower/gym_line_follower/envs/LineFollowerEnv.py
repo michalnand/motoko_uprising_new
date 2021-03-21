@@ -33,7 +33,7 @@ class Config:
         self.no_load_speed          = 1000      #1000rpm
         self.stall_torque           = 0.57      #0.57kg.cm, converted into Nm
 
-        self.sequence_length        = 64
+        self.sequence_length        = 16 
         
         '''
         self.no_load_speed     = rnd(500, 1500)
