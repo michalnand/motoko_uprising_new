@@ -9,22 +9,33 @@ class Model(torch.nn.Module):
         self.model_features = nn.LSTM(input_shape[1], hidden_size=hidden_count, batch_first=True)
 
         self.layers_mu = [
-            nn.Linear(hidden_count, outputs_count),
+            nn.Linear(hidden_count, hidden_count//2),
+            nn.ReLU(),
+            nn.Linear(hidden_count//2, outputs_count),
             nn.Tanh()
-        ]
+        ] 
 
         self.layers_var = [
-            nn.Linear(hidden_count, outputs_count),
+            nn.Linear(hidden_count, hidden_count//2),
+            nn.ReLU(),
+            nn.Linear(hidden_count//2, outputs_count),
             nn.Softplus()
         ]
 
         self.layers_value = [
-            nn.Linear(hidden_count, 1)
+            nn.Linear(hidden_count, hidden_count//2),
+            nn.ReLU(),
+            nn.Linear(hidden_count//2, 1)
         ]
 
         torch.nn.init.xavier_uniform_(self.layers_mu[0].weight)
+        torch.nn.init.xavier_uniform_(self.layers_mu[2].weight)
+
         torch.nn.init.xavier_uniform_(self.layers_var[0].weight)
+        torch.nn.init.xavier_uniform_(self.layers_var[2].weight)
+
         torch.nn.init.xavier_uniform_(self.layers_value[0].weight)
+        torch.nn.init.xavier_uniform_(self.layers_value[2].weight)
 
         self.model_features.to(self.device)
 
