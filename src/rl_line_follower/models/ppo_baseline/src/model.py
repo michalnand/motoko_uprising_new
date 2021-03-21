@@ -2,46 +2,29 @@ import torch
 import torch.nn as nn
 
 class Model(torch.nn.Module):
-
-    def __init__(self, input_shape, outputs_count):
+    def __init__(self, input_shape, outputs_count, hidden_count = 128):
         super(Model, self).__init__()
-
-        #self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.device = "cpu"
         
-        hidden_size = 64
-        
-        self.model_features = nn.GRU(input_size=input_shape[1], hidden_size=hidden_size, batch_first=True)
-            
+        self.model_features = nn.LSTM(input_shape[1], hidden_size=hidden_count, batch_first=True)
+
         self.layers_mu = [
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),                       
-            nn.Linear(hidden_size, outputs_count),
+            nn.Linear(hidden_count, outputs_count),
             nn.Tanh()
-        ]   
+        ]
 
         self.layers_var = [
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),                       
-            nn.Linear(hidden_size, outputs_count),
+            nn.Linear(hidden_count, outputs_count),
             nn.Softplus()
-        ]  
+        ]
 
         self.layers_value = [
-            nn.Linear(hidden_size, hidden_size),
-            nn.ReLU(),                      
-            nn.Linear(hidden_size, 1)
+            nn.Linear(hidden_count, 1)
         ]
 
         torch.nn.init.xavier_uniform_(self.layers_mu[0].weight)
-        torch.nn.init.xavier_uniform_(self.layers_mu[2].weight)
-
         torch.nn.init.xavier_uniform_(self.layers_var[0].weight)
-        torch.nn.init.xavier_uniform_(self.layers_var[2].weight)
-
         torch.nn.init.xavier_uniform_(self.layers_value[0].weight)
-        torch.nn.init.xavier_uniform_(self.layers_value[2].weight)
-
 
         self.model_features.to(self.device)
 
@@ -54,18 +37,17 @@ class Model(torch.nn.Module):
         self.model_value = nn.Sequential(*self.layers_value)
         self.model_value.to(self.device)
 
-        
         print("model_ppo")
         print(self.model_features)
         print(self.model_mu)
         print(self.model_var)
         print(self.model_value)
         print("\n\n")
-
- 
+       
     def forward(self, state):
-        output, hn    = self.model_features(state)
-        features = hn[0]
+        _, (hn, cn) = self.model_features(state)
+
+        features    = hn[0]
 
         mu      = self.model_mu(features)
         var     = self.model_var(features)
