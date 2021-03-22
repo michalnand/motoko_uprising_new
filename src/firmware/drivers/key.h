@@ -6,8 +6,8 @@
 #include <config.h>
 
 //key input
-#define KEY_GPIO                    TGPIOE
-#define KEY_PIN                     3
+#define KEY_GPIO                    TGPIOC
+#define KEY_PIN                     12
 
 class Key: public Thread
 {

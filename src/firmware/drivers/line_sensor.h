@@ -21,7 +21,7 @@ struct sLineSensor
 class LineSensor: public Thread
 {
   protected:
-    Gpio<TGPIOE, 7, GPIO_MODE_OUT> sensor_led;        //sensor white led
+    Gpio<TGPIOE, 14, GPIO_MODE_OUT> sensor_led;        //sensor white led
 
 
     int threshold;

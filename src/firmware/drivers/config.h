@@ -6,8 +6,8 @@
 #define TIMERS_COUNT        ((unsigned int)16)
 
 
-#define LED_GPIO        TGPIOA
-#define LED_PIN         8
+#define LED_GPIO        TGPIOD
+#define LED_PIN         0
 
 
 //line sensor parameters

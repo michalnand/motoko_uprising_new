@@ -31,7 +31,7 @@ int DistanceSensor::init()
   result.front_obstacle_warning = false;
   result.front_obstacle = false;
 
-  timer.add_task(this, 25, false);
+  timer.add_task(this, 10, false);
 
   m_ready = false;
 
