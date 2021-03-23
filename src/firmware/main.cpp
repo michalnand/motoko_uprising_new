@@ -1,11 +1,5 @@
 #include <clock.h>
 #include <drivers.h>
-#include <adc_driver.h>
-
-#include <motor.h>
-
-#include <lsm_test.h>
-#include <i2c.h>
 
 int main()
 {
@@ -19,6 +13,10 @@ int main()
     terminal << "run\n";
 
 
+    drivers.test_line_sensor();
+    //drivers.test_distance_sensor();
+
+
     //drivers.test_imu_sensor();
 
     //drivers.test_motor_speed_feedback();
@@ -27,7 +25,6 @@ int main()
     //drivers.test_line_follower();
 
     //drivers.test_motor_gyro_feedback();
-    drivers.test_ir_sensor();
 
     while (1)
     {

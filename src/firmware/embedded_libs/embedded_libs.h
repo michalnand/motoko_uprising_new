@@ -1,29 +1,38 @@
-#ifndef _EMBEDDED_LIB_H_
-#define _EMBEDDED_LIB_H_
+#ifndef _EMBEDDED_LIBS_H_
+#define _EMBEDDED_LIBS_H_
 
-#include <array.h>
-#include <gpio_interface.h>
-#include <i2c_interface.h>
-
-#include <mem.h>
-#include <thread.h>
-#include <delay.h>
-
-#include <math/math_func.h>
-#include <math/random.h>
-#include <math/pid.h>
-#include <math/filter.h>
-#include <math/quadrature_mixer.h>
-#include <math/sin_cos_table.h>
-#include <math/vec.h>
+#include <common/array.h>
+#include <common/atomic_var.h>
+#include <common/mem.h>
+#include <common/thread.h>
 
 
-#include <particle_filter/map_interface.h>
-#include <particle_filter/map_line.h>
-#include <particle_filter/map1d.h>
-#include <particle_filter/map2d.h>
+#include <control/pid.h>
+#include <control/resonant_filter.h>
+#include <control/ramp.h>
+#include <control/math_func.h>
+#include <control/random.h>
+#include <control/vec.h>
+
+#include <drivers/gpio.h>
 
 
+#include <drivers/i2c_interface.h>
+#include <drivers/i2c.h>
+#include <drivers/usart.h>
+#include <drivers/terminal.h>
+#include <drivers/timer.h>
 
+#include <drivers/adc.h>
+#include <drivers/imu.h>
+#include <drivers/line_sensor.h>
+#include <drivers/distance_sensor.h>
+#include <drivers/encoder_sensor.h>
+#include <drivers/motor_controll.h>
+
+#include <drivers/eeprom.h>
+#include <drivers/key.h>
+
+#include <drivers.h>
 
 #endif

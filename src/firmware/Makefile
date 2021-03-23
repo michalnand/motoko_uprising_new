@@ -7,6 +7,7 @@ C_SRCS+= $(shell find  ./STM32F7xx_StdPeriph_Driver/ -name '*.c')
 
 
 INC = -I .
+INC+= -I ./config/
 INC+= -I ./device/
 INC+= -I ./device/CMSIS/
 INC+= -I ./STM32F7xx_StdPeriph_Driver/inc/
@@ -16,8 +17,9 @@ INC+= -include ./device/stm32f7xx.h
 
 INC_CPP+= -I .
 INC_CPP+= -I ./embedded_libs/
-INC_CPP+= -I ./embedded_libs/cnn/
-INC_CPP+= -I ./drivers/
+INC_CPP+= -I ./embedded_libs/common/
+INC_CPP+= -I ./embedded_libs/control/
+INC_CPP+= -I ./embedded_libs/drivers/
 
 TARGET = -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -fsingle-precision-constant -DSTM32F746xx
 
