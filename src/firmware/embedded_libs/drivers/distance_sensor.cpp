@@ -63,8 +63,8 @@ void DistanceSensor::main()
 
     m_ready = true;
 
-
-    unsigned int period = 4;
+    
+    unsigned int period = 4; 
 
     if ((state%period) == 0)
         front_ir_led = 0;
@@ -91,6 +91,14 @@ bool DistanceSensor::ready()
 void DistanceSensor::print()
 {
     terminal << "distance sensor\n";
+
+    float adc_front = adc.read(ADC_FRONT)/4096.0;
+    float adc_left  = adc.read(ADC_LEFT)/4096.0;
+    float adc_right = adc.read(ADC_RIGHT)/4096.0;
+
+    terminal << "ADC front = " << adc_front << "\n";
+    terminal << "ADC left = " << adc_left << "\n";
+    terminal << "ADC right = " << adc_right << "\n";
 
     terminal << "front = " << result.front << "\n";
     terminal << "left = " << result.left << "\n";

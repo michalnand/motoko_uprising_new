@@ -111,4 +111,5 @@ void ADC_driver::gpio_init()
 
     GPIO_InitStruct.GPIO_Pin = GPIO_Pin_5;
     GPIO_Init(GPIOC, &GPIO_InitStruct);
+
 }

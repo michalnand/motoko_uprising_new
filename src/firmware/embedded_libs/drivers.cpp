@@ -45,10 +45,13 @@ int Drivers::init()
   i2c.init();
   terminal << "[DONE]\n";
 
+  /*
   terminal << "initializing IMU ";
   imu_sensor.init(i2c);
   terminal << " [DONE] with result " << imu_sensor.present() << "\n";
+  */
 
+  
   terminal << "initializing adc ";
   adc.init();
   terminal << "[DONE]\n"; 

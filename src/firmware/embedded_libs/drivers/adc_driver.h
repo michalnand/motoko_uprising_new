@@ -10,10 +10,10 @@
 #define ADC_LINE_6                 ((unsigned int)ADC_Channel_6)    //PA6
 #define ADC_LINE_7                 ((unsigned int)ADC_Channel_7)    //PA7
 
-#define ADC_FRONT               ((unsigned int)ADC_Channel_8)       //PC4
-#define ADC_LEFT                ((unsigned int)ADC_Channel_10)      //PB0
-#define ADC_RIGHT               ((unsigned int)ADC_Channel_9)       //PC5
-
+#define ADC_FRONT                  ((unsigned int)ADC_Channel_14)   
+#define ADC_RIGHT                  ((unsigned int)ADC_Channel_15)   
+#define ADC_LEFT                   ((unsigned int)ADC_Channel_8)     
+ 
 class ADC_driver
 {
     public:

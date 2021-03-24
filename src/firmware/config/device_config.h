@@ -2,7 +2,7 @@
 #define     _DEVICE_CONFIG_H_
 
 #define F_CPU               ((unsigned int)216000000)
-//#define F_CPU             ((unsigned int)312000000)
+//#define F_CPU             ((unsigned int)312000000) 
 #define TIMERS_COUNT        ((unsigned int)16)
 
 #define LED_GPIO        TGPIOD

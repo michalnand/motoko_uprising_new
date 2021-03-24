@@ -258,10 +258,6 @@ unsigned long int Timer::elapsed_time()
 
 
 
-#include <gpio.h>
-
-
-
 void Timer::timer_2_init(unsigned int frequency)
 {
     uint32_t clk_frq;
@@ -270,7 +266,7 @@ void Timer::timer_2_init(unsigned int frequency)
 
     float tmp, f_temp;
 
-    clk_frq = F_CPU/4; // HAL_RCC_GetPCLK1Freq();
+    clk_frq = F_CPU/8; // HAL_RCC_GetPCLK1Freq();
 
     if (frequency == 0)
       frequency=1;
@@ -303,8 +299,6 @@ void Timer::timer_2_init(unsigned int frequency)
     TIM_TimeBaseInit(TIM2, &tim_init_struct);
     TIM_Cmd(TIM2, ENABLE); // start counting by enabling CEN in CR1 */
     TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE); // enable so we can track each period
-
-    Gpio<LED_GPIO, LED_PIN, GPIO_MODE_OUT> led;
 
     NVIC_SetPriority(TIM2_IRQn, 1);
     NVIC_EnableIRQ(TIM2_IRQn);

@@ -13,8 +13,8 @@ int main()
     terminal << "run\n";
 
 
-    drivers.test_line_sensor();
-    //drivers.test_distance_sensor();
+    //drivers.test_line_sensor();
+    drivers.test_distance_sensor();
 
 
     //drivers.test_imu_sensor();

@@ -13,9 +13,9 @@
 #define LINE_SENSOR_STEP                ((int32_t)128)
 #define LINE_SENSOR_THRESHOLD           ((int32_t)300) 
 
-
+ 
 //Distance sensor config
-#define DISTANCE_SENSOR_DT              ((uint32_t)1)
+#define DISTANCE_SENSOR_DT              ((uint32_t)2)
 #define DISTANCE_SENSOR_WARNING         ((float)0.5)
 #define DISTANCE_SENSOR_OBSTACLE        ((float)0.25)
 
