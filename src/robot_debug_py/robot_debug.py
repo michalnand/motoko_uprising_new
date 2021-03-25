@@ -58,7 +58,7 @@ class RobotDebug:
 
         gui.variables.add("motors_output", motors)
 
-
+        '''
         camera = []
 
         camera_size = 8
@@ -79,6 +79,7 @@ class RobotDebug:
             network_output[i] = float(json_data["neural_network"]["network_output"][i])
 
         gui.variables.add("classification_result", network_output)
+        '''
 
        
         

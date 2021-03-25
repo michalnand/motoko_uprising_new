@@ -1,5 +1,6 @@
 #include <clock.h>
 #include <drivers.h>
+#include <diagnostic.h>
 
 int main()
 {
@@ -14,7 +15,7 @@ int main()
 
 
     //drivers.test_line_sensor();
-    drivers.test_distance_sensor();
+    //drivers.test_distance_sensor();
 
 
     //drivers.test_imu_sensor();
@@ -25,6 +26,8 @@ int main()
     //drivers.test_line_follower();
 
     //drivers.test_motor_gyro_feedback();
+
+    diagnostic();
 
     while (1)
     {
