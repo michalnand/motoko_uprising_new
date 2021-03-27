@@ -21,7 +21,7 @@ INC_CPP+= -I ./embedded_libs/common/
 INC_CPP+= -I ./embedded_libs/control/
 INC_CPP+= -I ./embedded_libs/drivers/
 
-TARGET = -mcpu=cortex-m4 -mthumb -mfloat-abi=softfp -fsingle-precision-constant -DSTM32F746xx
+TARGET = -mcpu=cortex-m7 -mthumb -mfloat-abi=softfp -fsingle-precision-constant -DSTM32F746xx
 
 
 
@@ -41,10 +41,10 @@ SIZE 		= $(GCCPREFIX)size
 
 
 
-CCFLAGS 	= $(TARGET) $(INC) -c -O3 -Os -s -Wall -Wextra -std=c99 -nostdlib   -fdata-sections -ffunction-sections   -Wl,--gc-sections
-CXXFLAGS	= $(TARGET) $(INC) $(INC_CPP) -c -O3 -Os -s -Wall -Wextra -pedantic -std=c++14 -fno-rtti  -fno-exceptions -fdata-sections -ffunction-sections  -Wl,--gc-sections
+CCFLAGS 	= $(TARGET) $(INC) -c -O2 -Os -s -Wall -Wextra -std=c99 -nostdlib   -fdata-sections -ffunction-sections   -Wl,--gc-sections
+CXXFLAGS	= $(TARGET) $(INC) $(INC_CPP) -c -O2 -s -funroll-loops -Wall -Wextra -pedantic -std=c++14 -fno-rtti  -fno-exceptions -fdata-sections -ffunction-sections  -Wl,--gc-sections
 LDFLAGS 	= -T$(LDSCRIPT) $(TARGET) -nostdlib -Wl,--gc-sections
-
+  
 C_OBJS 		= $(C_SRCS:.c=.o)
 CXX_OBJS 	= $(CXX_SRCS:.cpp=.o)
 

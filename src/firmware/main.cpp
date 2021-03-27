@@ -2,16 +2,21 @@
 #include <drivers.h>
 #include <diagnostic.h>
 
+#include <tests.h>
+
 int main()
 {
     core_SystemClock_Config_216();
-    //core_SystemClock_Config_312();
 
-    drivers.init();
+    drivers.init();   
+
+    performance_test(false);
+    performance_test(true);
 
     key.read();
 
     terminal << "run\n";
+
 
 
     //drivers.test_line_sensor();

@@ -17,11 +17,11 @@
 
 
 
-template <unsigned char port_name, unsigned char sda_pin, unsigned char scl_pin, unsigned char bus_speed = 5, unsigned char scl_port_name = port_name> class TI2C  : public I2C_Interface
+template <unsigned char port_name, unsigned char sda_pin, unsigned char scl_pin, unsigned char bus_speed = 5> class TI2C  : public I2C_Interface
 {
   private:
     Gpio<port_name, sda_pin, GPIO_MODE_IN_FLOATING>     sda;
-    Gpio<scl_port_name, scl_pin, GPIO_MODE_IN_FLOATING> scl;
+    Gpio<port_name, scl_pin, GPIO_MODE_IN_FLOATING>     scl;
 
   public:
     TI2C()

@@ -13,7 +13,6 @@ EncoderSensor             encoder_sensor;
 MotorControll             motor_controll;
 Key                       key;
 
-
 Drivers::Drivers()
 {
 
@@ -45,13 +44,11 @@ int Drivers::init()
   i2c.init();
   terminal << "[DONE]\n";
 
-  /*
   terminal << "initializing IMU ";
   imu_sensor.init(i2c);
   terminal << " [DONE] with result " << imu_sensor.present() << "\n";
-  */
 
-  
+
   terminal << "initializing adc ";
   adc.init();
   terminal << "[DONE]\n"; 
@@ -75,6 +72,8 @@ int Drivers::init()
   terminal << "initializing key ";
   key.init();
   terminal << "[DONE]\n";
+
+  terminal << "cpu speed set to " << F_CPU/1000000 << " MHz\n";
 
   terminal << "\n\n";
   terminal << "initializing sequence done\n\n";

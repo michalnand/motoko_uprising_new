@@ -322,6 +322,9 @@ void Reset_Handler(void)
 
      SystemInit();
 
+	SCB_EnableICache();
+	SCB_EnableDCache();
+
      main();
 }
 

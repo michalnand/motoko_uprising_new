@@ -13,6 +13,7 @@
 #include <timer.h>
 #include <i2c.h>
 #include <imu.h>
+#include <eeprom.h>
 #include <adc_driver.h>
 #include <line_sensor.h>
 #include <distance_sensor.h>
@@ -31,6 +32,8 @@ class Drivers
         virtual ~Drivers();
 
         int init();
+
+        void performance_test();
 
         void test_imu_sensor(int count = -1);
         void test_line_sensor(int count = -1);
