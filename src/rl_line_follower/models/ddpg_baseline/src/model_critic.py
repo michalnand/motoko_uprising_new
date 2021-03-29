@@ -10,7 +10,7 @@ class Model(torch.nn.Module):
                 
         self.layers = [
             nn.Linear(input_shape[0]*input_shape[1] + outputs_count, hidden_size),
-            nn.Linear(),
+            nn.ReLU(), 
             nn.Linear(hidden_size, hidden_size//2),
             nn.ReLU(),                       
             nn.Linear(hidden_size//2, outputs_count) 
