@@ -34,7 +34,7 @@ class NoisyLinearFull(torch.nn.Module):
 
 
 class Model(torch.nn.Module):
-    def __init__(self, input_shape, outputs_count, hidden_size = 128):
+    def __init__(self, input_shape, outputs_count, hidden_size = 64):
         super(Model, self).__init__()
 
         #self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -46,7 +46,7 @@ class Model(torch.nn.Module):
             NoisyLinearFull(hidden_size, hidden_size), 
             nn.ReLU(),                       
             NoisyLinearFull(hidden_size, outputs_count),
-            nn.Tanh() 
+            nn.Tanh()  
         ] 
 
         torch.nn.init.xavier_uniform_(self.layers_output[0].weight)

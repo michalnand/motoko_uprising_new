@@ -38,7 +38,7 @@ while True:
     
     score+= reward
 
-    print("score = ", score)
+    print("score = ", score, state.shape)
     
     if done:
         score = 0.0
