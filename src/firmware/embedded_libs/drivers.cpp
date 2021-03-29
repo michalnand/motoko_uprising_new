@@ -69,6 +69,7 @@ int Drivers::init()
   motor_controll.init();
   terminal << "[DONE]\n";
 
+
   terminal << "initializing key ";
   key.init();
   terminal << "[DONE]\n";

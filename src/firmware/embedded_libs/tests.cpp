@@ -1,98 +1,144 @@
 #include <tests.h>
+#include <Linear.h>
+#include <Conv2d.h>
 
-
-#include <matrix_vector.h>
-
-#define INPUTS_COUNT  ((unsigned int)64)
-#define OUTPUTS_COUNT ((unsigned int)64)
- 
-template<unsigned int size>
-int32_t vector_dot(int8_t *w, int8_t *x)
+template<   unsigned int in_features, unsigned int out_features, 
+            class IO_t, class WEIGHT_t, class ACC_t>
+float linear_layer_test()
 {
-  int32_t result = 0;
-  for (unsigned int i = 0; i < size; i++)
-  {
-    result+= w[i]*x[i];
-  }
+  IO_t weights[in_features*out_features];
+  IO_t bias[out_features];
+  IO_t input[in_features];
+  IO_t output[out_features*4];
 
-  return result;
-}
+  for (unsigned int i = 0; i < in_features*out_features; i++)
+    weights[i] = i*27 + 55;
 
-void performance_test(bool cache_enabled)
-{
-  terminal << "\n";
-  terminal << "cache enabled " << cache_enabled << "\n";
-
-  if (cache_enabled)
-  {
-    SCB_EnableICache();
-	SCB_EnableDCache();
-  }
-  else
-  {
-    SCB_DisableICache();
-	SCB_DisableDCache();
-  }
-  
-  timer.reset();
-
-  float pi    = 0.0;
-  for (unsigned int i = 0; i < 1000000; i+= 8)
-  {
-    pi  = pi + 4.0/(2.0*(i+0) + 1); 
-    pi  = pi - 4.0/(2.0*(i+1) + 1);
-    pi  = pi + 4.0/(2.0*(i+2) + 1);
-    pi  = pi - 4.0/(2.0*(i+3) + 1);
-    pi  = pi + 4.0/(2.0*(i+4) + 1);
-    pi  = pi - 4.0/(2.0*(i+5) + 1);
-    pi  = pi + 4.0/(2.0*(i+6) + 1);
-    pi  = pi - 4.0/(2.0*(i+7) + 1);
-  } 
-
-  auto time_a =  timer.elapsed_time();
-  float performance_a = 5*1.0/(time_a*0.001);
-
-  terminal << "cpu float32 performance " << performance_a <<  "M FLOPS\n";
-  terminal << "pi result " << pi << "\n";
-
-  
-  int8_t    mat_w[INPUTS_COUNT*OUTPUTS_COUNT];
-  int8_t    mat_x[INPUTS_COUNT];
-  int32_t   mat_y[OUTPUTS_COUNT];
-
-  for (unsigned int i = 0; i < INPUTS_COUNT*OUTPUTS_COUNT; i++)
-    mat_w[i] = i*27 + 55;
+  for (unsigned int i = 0; i < out_features; i++)
+    bias[i] = 0;
  
-  for (unsigned int i = 0; i < INPUTS_COUNT; i++)
-    mat_x[i] = i*27 + 55;
+  for (unsigned int i = 0; i < in_features; i++)
+    input[i] = i*27 + 55;
 
-  for (unsigned int i = 0; i < OUTPUTS_COUNT; i++)
-    mat_y[i] = i*27 + 55;
-
+  for (unsigned int i = 0; i < out_features; i++)
+    output[i] = 0; 
 
   timer.reset();
 
   for (unsigned int j = 0; j < 1000; j++)
-  {     
-    for (unsigned int i = 0; i < INPUTS_COUNT; i++)
-      mat_x[i]+= 1;
+  {
+    for (unsigned int i = 0; i < in_features; i++)
+      input[i]+= i*27;
+    Linear<in_features, out_features, IO_t, WEIGHT_t, ACC_t, 127, 521>(output, input, weights, bias);
+  }
 
-    matrix_vector<INPUTS_COUNT, OUTPUTS_COUNT>(mat_y, mat_w, mat_x);
-  } 
+  auto time = timer.elapsed_time()*0.001;
 
-  auto time_b =  timer.elapsed_time();
+  float performance = 1000*2*in_features*out_features*1.0/(time*1000000);
+
+  terminal << "linear layer " << in_features << " " << out_features << " " << " performance = " << performance << "Mops/s\n";
+
+  return performance;
+}
+
+
+
+
+template<   unsigned int height, unsigned int width,
+            unsigned int input_channels, unsigned int out_channels, 
+            class IO_t, class WEIGHT_t, class ACC_t>
+float conv2d_layer_test()
+{
+  IO_t weights[input_channels*out_channels*3*3];
+  IO_t bias[out_channels];
+  IO_t input[height*width*input_channels];
+  IO_t output[height*width*out_channels];
+
+  for (unsigned int i = 0; i < input_channels*out_channels*3*3; i++)
+    weights[i] = i*27 + 55;
+
+  for (unsigned int i = 0; i < out_channels; i++)
+    bias[i] = 0;
  
-  int32_t sum = 0;
-  for (unsigned int i = 0; i < OUTPUTS_COUNT; i++)
-    sum+= mat_y[i];  
+  for (unsigned int i = 0; i < height*width*input_channels; i++)
+    input[i] = i*27 + 55;
 
-  float performance_b = 1000*2*INPUTS_COUNT*OUTPUTS_COUNT*1.0/(time_b*0.001*1000000);
+  for (unsigned int i = 0; i < height*width*out_channels; i++)
+    output[i] = 0; 
 
-  terminal << "cpu int8 AI performance : matrix-vector " << performance_b << " Mops/s\n";
-  terminal << "result " << sum << "\n"; 
+  timer.reset();
 
+  for (unsigned int j = 0; j < 10; j++)
+  {
+    for (unsigned int i = 0; i < height*width*input_channels; i++)
+      input[i]+= i*27;
+
+    Conv2d<height, width, input_channels, out_channels, 3, 1, 0, IO_t, WEIGHT_t, ACC_t, 127, 571>(output, input, weights, bias);
+  }
+
+  auto time = timer.elapsed_time()*0.001; 
+
+  float performance = 10*2*(height-2)*(width-2)*input_channels*out_channels*3*3*1.0/(time*1000000);
+
+  terminal << "conv layer layer " << height << " " << width << " " << input_channels << " " << out_channels << " " << " performance = " << performance << "Mops/s\n";
+
+  return performance;
+}
+
+
+void performance_test(bool cache_enabled)
+{
+  if (cache_enabled)
+  {
+    SCB_EnableICache();
+	  SCB_EnableDCache();
+  }
+  else
+  {
+    SCB_DisableICache();
+	  SCB_DisableDCache();
+  }
+
+  float score = 0;
+
+  terminal << "cache enabled " << cache_enabled << "\n\n";
+
+  terminal << "int8 performance\n";
+  score+= linear_layer_test<64, 64, int8_t, int8_t, int32_t>();
+  score+= linear_layer_test<16, 64, int8_t, int8_t, int32_t>();
+  score+= linear_layer_test<64, 16, int8_t, int8_t, int32_t>(); 
+  score+= linear_layer_test<128, 128, int8_t, int8_t, int32_t>();
+  score+= linear_layer_test<16, 128, int8_t, int8_t, int32_t>();
+  score+= linear_layer_test<128, 16, int8_t, int8_t, int32_t>();
   
+  score+= conv2d_layer_test<32, 32, 1, 8,  int8_t, int8_t, int32_t>();
+  score+= conv2d_layer_test<16, 16, 16, 16, int8_t, int8_t, int32_t>();
+  score+= conv2d_layer_test<16, 16, 16, 32, int8_t, int8_t, int32_t>();
+  score+= conv2d_layer_test<8, 8, 32, 64, int8_t, int8_t, int32_t>();
+  score+= conv2d_layer_test<8, 8, 64, 64, int8_t, int8_t, int32_t>();
+  score+= conv2d_layer_test<4, 4, 64, 128, int8_t, int8_t, int32_t>();
 
 
+  /* 
+  terminal << "\n"; 
+
+  terminal << "float performance\n";
+  score+= linear_layer_test<64, 64, float, float, float>();
+  score+= linear_layer_test<16, 64, float, float, float>();
+  score+= linear_layer_test<64, 16, float, float, float>();
+  score+= linear_layer_test<128, 128, float, float, float>();
+  score+= linear_layer_test<16, 128, float, float, float>();
+  score+= linear_layer_test<128, 16, float, float, float>();
+ 
+  score+= conv2d_layer_test<32, 32, 1, 16, float, float, float>();
+  score+= conv2d_layer_test<16, 16, 16, 16, float, float, float>();
+  score+= conv2d_layer_test<8, 8, 32, 32, float, float, float>();
+  score+= conv2d_layer_test<4, 4, 32, 64, float, float, float>();
+
+  terminal << "\n"; 
+  */
+
+  terminal << "score " << score << "\n";
+  
   terminal << "\n\n\n";
 }

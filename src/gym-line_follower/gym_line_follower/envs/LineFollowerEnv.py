@@ -100,21 +100,23 @@ class LineFollowerEnv(gym.Env):
         self.robot_model.set_throttle(action[0], action[1])
         self.pb_client.stepSimulation()
 
-        closes_idx, line_pos_raw = self._get_line_position()
+        closest_idx, line_pos_raw = self._get_line_position()
+
+
 
         line_position = numpy.clip(line_pos_raw, -self.config.robot_sensors_brace, self.config.robot_sensors_brace)/self.config.robot_sensors_brace
 
         reward = 0.0
         done   = False
 
-        reward = (1.0 - numpy.abs(line_position))*0.01
+        reward = (1.0 - numpy.abs(line_position))*0.001
 
         if numpy.abs(line_pos_raw) > 3.0*self.config.robot_sensors_brace:
             done = True
             reward = -1.0
         elif numpy.abs(line_pos_raw) > self.config.robot_sensors_brace:
             reward = -0.1
-        elif self.line_model.set_visited(closes_idx):
+        elif self.line_model.set_visited(closest_idx) == True:
             reward+= 1.0
 
         self._update_observation()
