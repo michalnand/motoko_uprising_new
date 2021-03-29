@@ -34,49 +34,44 @@ class NoisyLinearFull(torch.nn.Module):
 
 
 class Model(torch.nn.Module):
-    def __init__(self, input_shape, outputs_count, hidden_size = 64):
+    def __init__(self, input_shape, outputs_count, hidden_size = 128):
         super(Model, self).__init__()
 
         #self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.device = "cpu"
-                
-        self.model_features = nn.GRU(input_size=input_shape[1], hidden_size=hidden_size, batch_first=True)
-            
-        self.layers_output = [
-            NoisyLinearFull(hidden_size, hidden_size), 
+                            
+        self.layers = [
+            nn.Flatten(),
+            nn.Linear(input_shape[0]*input_shape[1], hidden_size),
+            nn.ReLU(),
+            NoisyLinearFull(hidden_size, hidden_size//2), 
             nn.ReLU(),                       
-            NoisyLinearFull(hidden_size, outputs_count),
+            NoisyLinearFull(hidden_size//2, outputs_count),
             nn.Tanh()  
         ] 
 
-        torch.nn.init.xavier_uniform_(self.layers_output[0].weight)
-        torch.nn.init.uniform_(self.layers_output[2].weight, -0.3, 0.3)
+        torch.nn.init.xavier_uniform_(self.layers[1].weight)
+        torch.nn.init.xavier_uniform_(self.layers[3].weight)
+        torch.nn.init.uniform_(self.layers[5].weight, -0.3, 0.3)
 
-        self.model_features.to(self.device)
-
-        self.model_output = nn.Sequential(*self.layers_output)
-        self.model_output.to(self.device)
+        self.model = nn.Sequential(*self.layers)
+        self.model.to(self.device)
 
         print("model_actor")
-        print(self.model_features)
-        print(self.model_output)
+        print(self.model)
         print("\n\n")
        
 
     def forward(self, state):
-        output, hn  = self.model_features(state)
-        return self.model_output(hn[0])
+        return self.model(state)
 
     def save(self, path):
         print("saving to ", path)
-        torch.save(self.model_features.state_dict(), path + "model_actor_features.pt")
-        torch.save(self.model_output.state_dict(), path + "model_actor_output.pt")
+        torch.save(self.model.state_dict(), path + "model_actor.pt")
        
     def load(self, path):       
         print("loading from ", path)
-        self.model_features.load_state_dict(torch.load(path + "model_actor_features.pt", map_location = self.device))
-        self.model_output.load_state_dict(torch.load(path + "model_actor_output.pt", map_location = self.device))
+        self.model.load_state_dict(torch.load(path + "model_actor.pt", map_location = self.device))
        
-        self.model_features.eval()  
-        self.model_output.eval()  
+        self.model.eval()  
        
