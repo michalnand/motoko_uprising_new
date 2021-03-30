@@ -97,12 +97,12 @@ class LineFollowerEnv(gym.Env):
 
 
     def step(self, action):
+        self.iterations+= 1
+
         self.robot_model.set_throttle(action[0], action[1])
         self.pb_client.stepSimulation()
 
         closest_idx, line_pos_raw = self._get_line_position()
-
-
 
         line_position = numpy.clip(line_pos_raw, -self.config.robot_sensors_brace, self.config.robot_sensors_brace)/self.config.robot_sensors_brace
 
@@ -118,6 +118,9 @@ class LineFollowerEnv(gym.Env):
             reward = -0.1
         elif self.line_model.set_visited(closest_idx) == True:
             reward+= 1.0
+
+        if self.iterations >= self.max_episode_steps:
+            done = True
 
         self._update_observation()
 
