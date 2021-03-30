@@ -6,11 +6,11 @@ import time
 
 import RLAgents
 
-import models.ppo_baseline.src.model            as Model
-import models.ppo_baseline.src.config           as Config
+import models.ppo_baseline_continuous.src.model            as Model
+import models.ppo_baseline_continuous.src.config           as Config
 
 
-path = "models/ppo_baseline/"
+path = "models/ppo_baseline_continuous/"
 
 config  = Config.Config()
 

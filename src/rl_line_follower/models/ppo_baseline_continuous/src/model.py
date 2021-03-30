@@ -2,30 +2,30 @@ import torch
 import torch.nn as nn
 
 class Model(torch.nn.Module):
-    def __init__(self, input_shape, outputs_count, hidden_count = 128):
+    def __init__(self, input_shape, outputs_count, hidden_count = 64):
         super(Model, self).__init__()
         self.device = "cpu"
         
-        self.model_features = nn.LSTM(input_shape[1], hidden_size=hidden_count, batch_first=True)
+        self.model_features = nn.GRU(input_shape[1], hidden_size=hidden_count, batch_first=True)
 
         self.layers_mu = [
-            nn.Linear(hidden_count, hidden_count//2),
+            nn.Linear(hidden_count, hidden_count),
             nn.ReLU(),
-            nn.Linear(hidden_count//2, outputs_count),
+            nn.Linear(hidden_count, outputs_count),
             nn.Tanh()
         ] 
 
         self.layers_var = [
-            nn.Linear(hidden_count, hidden_count//2),
+            nn.Linear(hidden_count, hidden_count),
             nn.ReLU(),
-            nn.Linear(hidden_count//2, outputs_count),
+            nn.Linear(hidden_count, outputs_count),
             nn.Softplus()
         ]
 
         self.layers_value = [
-            nn.Linear(hidden_count, hidden_count//2),
+            nn.Linear(hidden_count, hidden_count),
             nn.ReLU(),
-            nn.Linear(hidden_count//2, 1)
+            nn.Linear(hidden_count, 1)
         ]
 
         torch.nn.init.xavier_uniform_(self.layers_mu[0].weight)
@@ -56,7 +56,7 @@ class Model(torch.nn.Module):
         print("\n\n")
        
     def forward(self, state):
-        _, (hn, cn) = self.model_features(state)
+        _, hn = self.model_features(state)
 
         features    = hn[0]
 

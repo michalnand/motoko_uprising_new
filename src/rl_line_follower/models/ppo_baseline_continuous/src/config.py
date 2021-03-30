@@ -1,6 +1,6 @@
 class Config(): 
     def __init__(self):
-        self.gamma                  = 0.95
+        self.gamma                  = 0.99
         self.entropy_beta           = 0.001
         self.eps_clip               = 0.2
 
