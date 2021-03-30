@@ -119,7 +119,7 @@ class LineFollowerEnv(gym.Env):
         elif self.line_model.set_visited(closest_idx) == True:
             reward+= 1.0
 
-        if self.iterations >= self.config.self.max_episode_steps:
+        if self.iterations >= self.config.max_episode_steps:
             done = True
 
         self._update_observation()
