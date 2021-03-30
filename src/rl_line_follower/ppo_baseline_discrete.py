@@ -13,40 +13,13 @@ class Wrapper(gym.Wrapper):
     def __init__(self, env):
         gym.Wrapper.__init__(self, env) 
 
-        self.action_space       = gym.spaces.Discrete(8)
+        self.action_space       = gym.spaces.Discrete(4)
 
         actions = []
         actions.append([0.0, 0.0])
         actions.append([0.0, 1.0]) 
         actions.append([1.0, 0.0])
         actions.append([1.0, 1.0]) 
-
-        actions.append([0.4, 0.6]) 
-        actions.append([0.6, 0.4])
-        actions.append([0.2, 0.8])
-        actions.append([0.8, 0.2])  
-
-        '''
-        actions.append([0.0, 0.0])
-        actions.append([0.5, 0.5])
-        actions.append([0.8, 0.8])
-        actions.append([1.0, 1.0])
-
-        actions.append([0.0, 0.2])
-        actions.append([0.0, 0.4])
-        actions.append([0.0, 0.8])
-        actions.append([0.0, 1.0])
-
-        actions.append([0.2, 0.0])
-        actions.append([0.4, 0.0])
-        actions.append([0.8, 0.0])
-        actions.append([1.0, 0.0])
-
-        actions.append([0.2, 1.0])
-        actions.append([0.4, 0.8])
-        actions.append([0.8, 0.4])
-        actions.append([1.0, 0.2])
-        '''
 
         self.actions = numpy.array(actions, dtype=numpy.float32)
 
