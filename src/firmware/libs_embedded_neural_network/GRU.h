@@ -42,7 +42,7 @@ template<   unsigned int in_features, unsigned int hidden_size,
             class IO_t, class WEIGHT_t, class ACC_t, int io_max, 
             int hr_scale, int hz_scale, int hn_scale,
             int ir_scale, int iz_scale, int in_scale>
-void GRUStep(float *hidden_buffer, IO_t *input_buffer,
+void GRUStream(IO_t *output_buffer, IO_t *input_buffer, float *hidden_buffer,
              
             const WEIGHT_t *whr, const WEIGHT_t *bhr,
             const WEIGHT_t *whz, const WEIGHT_t *bhz,
@@ -102,6 +102,14 @@ void GRUStep(float *hidden_buffer, IO_t *input_buffer,
             hidden_buffer[i] = (1.0 - z)*n + z*hidden_buffer[i];
         } 
     }
+
+    for (unsigned int i = 0; i < hidden_size; i++)
+    {
+        if (sizeof(IO_t) == 1)
+            output_buffer[i] = (IO_t)(hidden_buffer[i]*127.0);
+        else
+            output_buffer[i] = hidden_buffer[i];
+    }
 }
 
 template<   unsigned int in_features, unsigned int hidden_size, 
@@ -127,10 +135,10 @@ void GRU(   IO_t *output_buffer, IO_t *input_buffer, unsigned int sequence_lengt
 
     for (unsigned int t = 0; t < sequence_length; t++)
     {    
-        GRUStep<in_features, hidden_size,  IO_t, WEIGHT_t, ACC_t, io_max, 
+        GRUStream<in_features, hidden_size,  IO_t, WEIGHT_t, ACC_t, io_max, 
                 hr_scale,   hz_scale,     hn_scale,
                 ir_scale,   iz_scale,     in_scale>(   
-                    hidden_buffer, input_buffer + t*in_features,
+                    output_buffer, input_buffer + t*in_features, hidden_buffer,
                     whr, bhr,
                     whz, bhz,
                     whn, bhn,
@@ -139,14 +147,6 @@ void GRU(   IO_t *output_buffer, IO_t *input_buffer, unsigned int sequence_lengt
                     wiz, biz,
                     win, bin 
         ); 
-    }
-    
-    for (unsigned int i = 0; i < hidden_size; i++)
-    {
-        if (sizeof(IO_t) == 1)
-            output_buffer[i] = (IO_t)(hidden_buffer[i]*127.0);
-        else
-            output_buffer[i] = hidden_buffer[i];
     }
 }
 
