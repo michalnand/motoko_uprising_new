@@ -1,0 +1,147 @@
+{
+  "textures" :
+  [
+    {
+      "id"        : 0,
+      "file_name" : "resources/textures/font.png"
+    },
+    {
+      "id"        : 1,
+      "file_name" : "resources/textures/background_green.jpg"
+    },
+
+    {
+      "id"        : 100,
+      "file_name" : "resources/textures/arrow_green_left.png"
+    },
+    {
+      "id"        : 101,
+      "file_name" : "resources/textures/arrow_green_up.png"
+    },
+    {
+      "id"        : 102,
+      "file_name" : "resources/textures/arrow_green_right.png"
+    },
+
+    {
+      "id"        : 103,
+      "file_name" : "resources/textures/arrow_red_left.png"
+    },
+    {
+      "id"        : 104,
+      "file_name" : "resources/textures/arrow_red_up.png"
+    },
+    {
+      "id"        : 105,
+      "file_name" : "resources/textures/arrow_red_right.png"
+    }
+   
+  ],
+
+  "width"   : 1280,
+  "height"  : 720,
+  "window_label" : "Robot debug",
+
+  "background_texture" : 1,
+
+  "widgets" :
+  {
+    "type"      : "label",
+    "position"  : [0.0, 0.0, 0.0],
+    "color"     : [1.0, 0.0, 0.0],
+    "font_size" : 0.1,
+
+    "widgets" : [
+                  {
+                    "type"           : "bar_graph",
+                    "position"       : [1.8, 1.25, 0.0],
+                    "color"          : [0.5, 1.0, 0.0],
+                    "bar_color"      : [0.8, 0.8, 0.8],
+
+                    "font_size" : 0.05,
+
+                    "width"     : 1.6,
+                    "height"    : 0.5,
+
+                    "filled"    : false,
+                    "enlight_max_value" : false,
+
+                    "frame_width" : 0.01,
+                    "label"     : "LINE SENSORS",
+
+                    "min_value" : 0.0,
+                    "max_value" : 1.0,
+
+                    "variable"  : {
+                                    "name"  : "line_sensors",
+                                    "value" : [0.0, 0.25, 0.5, 0.75, 1.0, 1.0, 0.75, 0.5]
+                                  }
+                  },
+
+
+                  {
+                    "type"           : "graph",
+                    "position"       : [-1.75, 0.0, 0.0],
+                    "color"          : [0.5, 1.0, 0.0],
+                    "bar_color"      : [0.8, 0.8, 0.8],
+
+                    "font_size" : 0.05,
+
+                    "width"     : 1.75,
+                    "height"    : 1.8,
+
+                    "filled"    : true,
+
+                    "frame_width" : 0.01,
+                    "label"     : "LINE",
+
+                    "variable"  : {
+                                    "name"  : "line_position",
+                                    "value" : [-1, [0, 1, 2, 3, 4], [-10, 0, 10, 20, 30]]
+                                  }
+                  },
+
+                  {
+                    "type"           : "image_frame",
+                    "position"       : [1.0, -0.8, 0.0],
+                    "color"          : [0.5, 1.0, 0.0],
+
+                    "font_size" : 0.05,
+
+                    "width"     : 0.75,
+                    "height"    : 0.75,
+
+                    "filled"    : false,
+
+                    "frame_width" : 0.01,
+                    "label"     : "ground truth",
+
+                    "variable"  : {
+                                    "name"  : "ground_truth_image",
+                                    "value" : 102
+                                  }
+                  },
+
+                  {
+                    "type"           : "image_frame",
+                    "position"       : [2.6, -0.8, 0.0],
+                    "color"          : [0.5, 1.0, 0.0],
+
+                    "font_size" : 0.05,
+
+                    "width"     : 0.75,
+                    "height"    : 0.75,
+
+                    "filled"    : false,
+
+                    "frame_width" : 0.01,
+                    "label"     : "predicion",
+
+                    "variable"  : {
+                                    "name"  : "prediction_image",
+                                    "value" : 102
+                                  }
+                  }
+                ]
+  }
+}

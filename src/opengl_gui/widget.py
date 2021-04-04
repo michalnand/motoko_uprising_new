@@ -37,12 +37,14 @@ class Widget:
 
         self.child_widgets = []
 
-        from opengl_gui.widget_frame import WidgetFrame
-        from opengl_gui.widget_bar_graph import WidgetBarGraph
-        from opengl_gui.widget_text_frame import WidgetTextFrame
-        from opengl_gui.widget_distance_sensor import WidgetDistanceSensor
-        from opengl_gui.widget_model_frame import WidgetModelFrame
-        from opengl_gui.widget_camera_frame import WidgetCameraFrame
+        from opengl_gui.widget_frame            import WidgetFrame
+        from opengl_gui.widget_graph            import WidgetGraph
+        from opengl_gui.widget_bar_graph        import WidgetBarGraph
+        from opengl_gui.widget_text_frame       import WidgetTextFrame
+        from opengl_gui.widget_distance_sensor  import WidgetDistanceSensor
+        from opengl_gui.widget_model_frame      import WidgetModelFrame
+        from opengl_gui.widget_camera_frame     import WidgetCameraFrame
+        from opengl_gui.widget_image_frame      import WidgetImageFrame
 
         if "widgets" in self.params:
             for i in range(len(self.params["widgets"])):
@@ -52,6 +54,8 @@ class Widget:
                     widget = WidgetFrame(visualisation, variables, textures, params["widgets"][i])
                 elif widget_type == "text_frame":
                     widget = WidgetTextFrame(visualisation, variables, textures, params["widgets"][i])    
+                elif widget_type == "graph":
+                    widget = WidgetGraph(visualisation, variables, textures, params["widgets"][i])
                 elif widget_type == "bar_graph":
                     widget = WidgetBarGraph(visualisation, variables, textures, params["widgets"][i])
                 elif widget_type == "distance_sensors":
@@ -60,6 +64,8 @@ class Widget:
                     widget = WidgetModelFrame(visualisation, variables, textures, params["widgets"][i])
                 elif widget_type == "camera_frame":
                     widget = WidgetCameraFrame(visualisation, variables, textures, params["widgets"][i])
+                elif widget_type == "image_frame":
+                    widget = WidgetImageFrame(visualisation, variables, textures, params["widgets"][i])
                 else:
                     widget = Widget(visualisation, variables, textures, params["widgets"][i])
 

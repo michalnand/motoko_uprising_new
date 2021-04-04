@@ -140,7 +140,7 @@ class GLVisualisation:
         glVertex3f(-width/2.0, height/2.0, 0.0)
 
 
-        glEnd()
+        glEnd() 
 
         glDeleteTextures(1, texture_id)
         glDisable(GL_TEXTURE_2D)

@@ -14,6 +14,32 @@ motoko uprising line following robot
     * gerber outputs [files](hardware/CAMOutputs/)
     * stl for 3D printed parts [files](hardware/mechanical/)
 
+# supervised learning for line position prediction
+
+**key points**
+* **input**  is time series sequence from 8 line sensors
+* **output** is classification into three classes (left, straight, righ)
+* RNN GRU with 64 units used, and linear layer with 3 neurons
+
+* confusion matrix result
+```bash
+accuracy   = 89.037 [%]
+hit_count  = 116703
+miss_count = 14369
+
+class_accuracy = 90.952%   90.474%   84.811%   
+
+
+confusion_matrix = 
+       28326        1376           8
+        2817       57907        5448
+           0        4720       30470
+```
+
+
+![diagrams](images/line_rnn_prediction.gif)
+
+
 # reinforcement learning in Pybullet ENV
 
 **key points**
