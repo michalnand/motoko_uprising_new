@@ -1,5 +1,20 @@
 # motoko uprising new
-motoko uprising line following robot
+motoko uprising line following robot,
+
+**highlights**
+- cpu stm32f7, 216MHz ARM Cortex M7
+- DRV8834, TI motor driver
+- 8x phototransistor + white led as line sensor
+- IR leds for obstacle detection
+- 2x pololu motors HP, 1:30 with encoder
+- expansion : camera, laser sensor
+
+- custom operating system
+- reccurent LSTM in controll loop
+- total 3 other PIDs used
+
+
+![hardware](images/motoko_uprising.jpg)
 
 # structure
  
@@ -69,6 +84,8 @@ confusion_matrix =
 ![diagrams](images/gym-line_follower.png)
 
 # hardware
+
+![mechanical](images/robot_mount.jpg)
 
 ![mechanical](images/mechanical_01.png)
 ![mechanical](images/mechanical_03.png)
