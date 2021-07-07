@@ -4,7 +4,7 @@ Drivers drivers;
 
 Terminal                  terminal;
 Timer                     timer;
-TI2C<TGPIOD, 1, 2, 20>    i2c;
+TI2C<TGPIOD, 1, 2, 50>    i2c;
 IMU                       imu_sensor;
 ADC_driver                adc;
 LineSensor                line_sensor;
@@ -68,7 +68,6 @@ int Drivers::init()
   terminal << "initializing motor_controll ";
   motor_controll.init();
   terminal << "[DONE]\n";
-
 
   terminal << "initializing key ";
   key.init();
@@ -326,9 +325,9 @@ void Drivers::test_line_follower()
 {
   terminal << "\ntest_line_follower\n";
 
-  PID steering_pid(0.4, 0.0, 1.3, 10.0);
+  PID steering_pid(0.16, 0.0, 2.5, 10.0);
 
-  float speed      = 0.0;
+  float speed      = 0.0; 
   float speed_max  = 0.4;
   float speed_rise = 0.001;
 
@@ -338,7 +337,7 @@ void Drivers::test_line_follower()
   {
     if (line_sensor.ready())
     {
-        //if (line_sensor.result.on_line)
+        //if (line_sensor.result.line_lost_type == LINE_LOST_NONE)
         if (true)
         {
             //compute line possition and of center error

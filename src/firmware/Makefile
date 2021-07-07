@@ -21,6 +21,7 @@ INC_CPP+= -I ./embedded_libs/common/
 INC_CPP+= -I ./embedded_libs/control/
 INC_CPP+= -I ./embedded_libs/drivers/
 INC_CPP+= -I ./libs_embedded_neural_network
+INC_CPP+= -I ./ai
 
 TARGET = -mcpu=cortex-m7 -mthumb -mfloat-abi=softfp -fsingle-precision-constant -DSTM32F746xx
 

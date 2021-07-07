@@ -3,12 +3,12 @@
 #include <drivers.h>
 
 #define PWM_FREQUENCY       ((unsigned int)10000)
-#define PWM_PRESCALER       ((unsigned int)2) 
-#define PWM_PERIOD          (F_CPU*2/(3*PWM_FREQUENCY*PWM_PRESCALER))
+#define PWM_PRESCALER       ((unsigned int)4) 
+#define PWM_PERIOD          (F_CPU/(PWM_FREQUENCY*PWM_PRESCALER))
 
 Motor::Motor()
-{
-
+{ 
+ 
 }
 
 Motor::~Motor()
@@ -49,10 +49,10 @@ void Motor::init()
     outputChannelInit.TIM_OutputState   = TIM_OutputState_Enable; 
     outputChannelInit.TIM_OutputNState  = TIM_OutputNState_Enable;
 
-    outputChannelInit.TIM_OCPolarity = TIM_OCPolarity_Low;
-    outputChannelInit.TIM_OCNPolarity = TIM_OCNPolarity_Low;
-    outputChannelInit.TIM_OCIdleState = TIM_OCIdleState_Set;
-    outputChannelInit.TIM_OCNIdleState = TIM_OCIdleState_Reset;
+    outputChannelInit.TIM_OCPolarity    = TIM_OCPolarity_Low;
+    outputChannelInit.TIM_OCNPolarity   = TIM_OCNPolarity_Low;
+    outputChannelInit.TIM_OCIdleState   = TIM_OCIdleState_Set;
+    outputChannelInit.TIM_OCNIdleState  = TIM_OCIdleState_Reset;
 
     //pin PE12 config, OC3
     TIM_OC3Init(TIM1, &outputChannelInit);
@@ -79,18 +79,14 @@ void Motor::run_left(int pwm)
     if (pwm > 0)
     {
         //forward
-        left_way = 0;
+        left_way    = 1;
     }
     else
     {
         //backward
-        left_way = 1;
-        pwm = -pwm;
-        pwm = MOTOR_SPEED_MAX - pwm;
-    }
-
-
-    pwm = 100;
+        left_way    = 0;
+        pwm         = -pwm;
+    } 
 
     //saturation
     if (pwm > MOTOR_SPEED_MAX)
@@ -104,20 +100,16 @@ void Motor::run_right(int pwm)
     if (pwm > 0)
     {
         right_way = 1;
-        pwm = MOTOR_SPEED_MAX - pwm;
     }
     else
     {
         right_way = 0;
         pwm = -pwm;
     }
-
-    pwm = 200;
   
     //saturation
     if (pwm > MOTOR_SPEED_MAX)
         pwm = MOTOR_SPEED_MAX;
-
 
     TIM1->CCR2 = (pwm*PWM_PERIOD)/MOTOR_SPEED_MAX;
 }

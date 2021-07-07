@@ -6,13 +6,12 @@
 class EncoderSensor
 {
   private:
-      /*
-    Gpio<TGPIOC, 6, GPIO_MODE_IN_PULLUP> left_encoder;
+    Gpio<TGPIOC, 6, GPIO_MODE_IN_PULLUP> left_encoder_a;
     Gpio<TGPIOC, 7, GPIO_MODE_IN_PULLUP> left_encoder_b;
 
-    Gpio<TGPIOB, 4, GPIO_MODE_IN_PULLUP> right_encoder;
+    Gpio<TGPIOB, 4, GPIO_MODE_IN_PULLUP> right_encoder_a;
     Gpio<TGPIOB, 5, GPIO_MODE_IN_PULLUP> right_encoder_b;
-    */
+
   public:
     EncoderSensor();
     virtual ~EncoderSensor();

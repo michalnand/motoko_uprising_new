@@ -197,10 +197,6 @@ void IMU::read(bool calibration)
         i2c->stop();
     #endif
 
-    x/= 2;
-    y/= 2;
-    z/= 2;
-
     if (calibration)
     {
         offset.x+= x;
@@ -213,7 +209,10 @@ void IMU::read(bool calibration)
         time_now = timer.get_time_interrupt();
         uint32_t dt = time_now - time_old;
 
-
+        int32_t rz = (z - offset.z);
+        angular_rate.z = z;  
+        angle.z+= angular_rate.z; 
+        /*
         int32_t rx = (x - offset.x)*dt*IMU_DPS;
         int32_t ry = (y - offset.y)*dt*IMU_DPS;
         int32_t rz = (z - offset.z)*dt*IMU_DPS;
@@ -221,11 +220,11 @@ void IMU::read(bool calibration)
         angular_rate.x = rx/1000000;
         angular_rate.y = ry/1000000;
         angular_rate.z = rz/1000000;
-
-
+      
         angle.x+= angular_rate.x;
         angle.y+= angular_rate.y;
         angle.z+= angular_rate.z;
+        */
     }
 
     #if IMU_SINGLE_AXIS_MODE == true

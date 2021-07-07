@@ -142,7 +142,7 @@ void LineSensor::line_filter()
             on_line_count++;
 
 
-    if (average > 500)
+    if (average > 400)
     {
         result.line_type        = LINE_TYPE_SPOT;
         result.on_line_count    = on_line_count;
@@ -161,10 +161,10 @@ void LineSensor::line_filter()
     }
     else
     {
-        if (result.center_line_position < -0.8)
+        if (result.center_line_position < -0.75)
             result.line_lost_type = LINE_LOST_RIGHT;
         else
-        if (result.center_line_position > 0.8)
+        if (result.center_line_position > 0.75)
             result.line_lost_type = LINE_LOST_LEFT;
         else
             result.line_lost_type = LINE_LOST_CENTER;

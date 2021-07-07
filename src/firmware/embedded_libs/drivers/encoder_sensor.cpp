@@ -10,7 +10,6 @@ extern "C" {
 
 volatile long int g_left_encoder, g_right_encoder;
 
-/*
 void EXTI9_5_IRQHandler(void)
 {
     unsigned int tmp = GPIOC->IDR;
@@ -50,7 +49,7 @@ void EXTI4_IRQHandler()
 
     EXTI_ClearITPendingBit(EXTI_Line4);
 }
-*/
+
 #ifdef __cplusplus
 }
 #endif
@@ -72,7 +71,7 @@ void EncoderSensor::init()
     g_left_encoder    = 0;
     g_right_encoder   = 0;
 
-    /*
+    
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
@@ -102,9 +101,7 @@ void EncoderSensor::init()
         NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
         NVIC_Init(&NVIC_InitStruct);
     }
-    */
 
-    /*
     {
         GPIO_InitTypeDef GPIO_InitStruct;
         EXTI_InitTypeDef EXTI_InitStruct;
@@ -131,8 +128,7 @@ void EncoderSensor::init()
         NVIC_InitStruct.NVIC_IRQChannelCmd = ENABLE;
         NVIC_Init(&NVIC_InitStruct);
     }
-    */
-
+    
     /*
     //syscfg clock enable
     RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;

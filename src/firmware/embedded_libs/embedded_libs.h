@@ -23,7 +23,7 @@
 #include <drivers/terminal.h>
 #include <drivers/timer.h>
 
-#include <drivers/adc.h>
+#include <drivers/adc_driver.h>
 #include <drivers/imu.h>
 #include <drivers/line_sensor.h>
 #include <drivers/distance_sensor.h>

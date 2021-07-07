@@ -2,7 +2,7 @@
 #define _SENSORS_CONFIG_H_
 
 
-//IMU config
+//IMU config 
 #define IMU_SINGLE_AXIS_MODE            (true)
 #define IMU_DT                          ((uint32_t)10)
 #define IMU_DPS                         ((int32_t)410)
@@ -16,20 +16,15 @@
  
 //Distance sensor config
 #define DISTANCE_SENSOR_DT              ((uint32_t)2)
-#define DISTANCE_SENSOR_WARNING         ((float)0.5)
-#define DISTANCE_SENSOR_OBSTACLE        ((float)0.25)
+#define DISTANCE_SENSOR_WARNING         ((float)0.59) 
+#define DISTANCE_SENSOR_OBSTACLE        ((float)0.55)
 
 
-//Encoder sensor config
-#define ENCODER_SENSOR_PULSES_PER_ROTATION             ((int32_t)180)
+//encoder sensor config
+#define ENCODER_SENSOR_PULSES_PER_ROTATION             ((int32_t)180*2)
 #define ENCODER_SENSOR_WHEEL_CIRCUMFERENCE             ((int32_t)88)
 
 
-//motor controll config
-#define MOTOR_CONTROLL_DT                               LINE_SENSOR_DT
-#define MOTOR_CONTROLL_PID_KP                           ((float)1.3)
-#define MOTOR_CONTROLL_PID_KI                           ((float)0.15)
-#define MOTOR_CONTROLL_PID_KD                           ((float)1.5)
 
 
 #endif

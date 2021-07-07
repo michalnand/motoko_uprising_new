@@ -50,7 +50,7 @@ extern Drivers drivers;
 
 extern Terminal                  terminal;
 extern Timer                     timer;
-extern TI2C<TGPIOD, 1, 2, 20>    i2c;
+extern TI2C<TGPIOD, 1, 2, 50>    i2c;
 extern IMU                       imu_sensor;
 extern ADC_driver                adc;
 extern LineSensor                line_sensor;
