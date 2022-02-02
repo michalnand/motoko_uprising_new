@@ -1,0 +1,21 @@
+#ifndef _PID_H_
+#define _PID_H_
+
+
+class PID
+{
+    public:
+        PID();
+        virtual ~PID();
+
+        void init(float Kp, float Ki, float Kd, float out_range_min = -1.0, float out_range_max = 1.0, float dt = 0.01);
+        void reset(float output_initial = 0.0);
+
+        float step(float x_setpoint, float x_measured);
+
+    private:
+        float error, error_prev;
+        float derivative, integral;
+};
+ 
+#endif

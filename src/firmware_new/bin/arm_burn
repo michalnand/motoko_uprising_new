@@ -1,0 +1,14 @@
+# USART bootloader option
+# https://pypi.org/project/stm32loader/
+# serial TX to MCU RX (PA10).
+# serial RX to MCU TX (PA9).
+# serial DTR to MCU RESET.
+# serial RTS to MCU BOOT0 (or BOOT0 to 3.3V).
+# MCU BOOT1 to GND.
+#python3 stm32loader.py -b 115200 -p /dev/tty.usbserial-141130 -e -w -v build.bin
+
+#st-link option
+#https://github.com/stlink-org/stlink/
+st-flash --connect-under-reset write build.bin 0x8000000
+
+  

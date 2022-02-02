@@ -1,0 +1,77 @@
+#include "pid.h"
+
+PID::PID()
+{
+
+}
+
+PID::~PID()
+{
+
+}
+
+void PID::init(float Kp, float Ki, float Kd, float out_range_min, float out_range_max, float dt)
+{
+    kp = Kp;
+    ki = (0.5*Ki*dt);
+
+    reset();
+}
+        
+void PID::reset(float integral_initial = 0)
+{
+    error      = 0;
+    error_prev = 0;
+
+    itegrator       = integral_initial;
+    differentiator  = 0.0
+
+
+    step(integral_initial, integral_initial);
+}
+
+float PID::step(float setpoint, float measured)
+{
+    error = setpoint - measured;
+
+    float proportional = kp*error;
+
+
+    integrator    = integrator + ki*(error + error_prev);
+
+    float int_lim_min, int_lim_max;
+
+    if (proportional > out_range_max)
+    {
+        int_lim_max = out_range_max - proportional;
+    }
+    else
+    {
+        int_lim_max = 0.0;
+    }
+
+    if (proportional < out_range_min)
+    {
+        int_lim_min = out_range_min - proportional;
+    }
+    else
+    {
+        int_lim_min = 0.0;
+    }
+
+    if (integrator > int_lim_max)
+    {
+        integrator = int_lim_max;
+    }
+
+    if (integrator < int_lim_min)
+    {
+        integrator = int_lim_min;
+    }
+
+
+
+    derivator  = (2.0*Kd/(2*tau + dt))*(error - error_prev)
+
+    return y;
+}
