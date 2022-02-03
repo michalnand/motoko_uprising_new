@@ -7,11 +7,12 @@ AppPATH 		= ./usr
 GCCPREFIX	=arm-none-eabi-
 OUTPUT	 	=bin/build
 
-TARGET 		= -mcpu=cortex-m7 -mthumb -mfloat-abi=softfp -fsingle-precision-constant -DSTM32F767xx
+TARGET 		= -mcpu=cortex-m7 -mthumb -mfloat-abi=softfp -fsingle-precision-constant -DSTM32F746xx
 
 LDSCRIPT 	= $(LibsDevicePATH)/ldscript.ld
 
 INC+= -include $(LibsDevicePATH)/stm32f7xx_conf.h
+INC+= -include $(LibsDevicePATH)/device/stm32f7xx.h
 INC+= -I $(LibsCommonPATH)/
 INC+= -I $(LibsDevicePATH)/
 INC+= -I $(LibsDevicePATH)/device/ 
@@ -43,9 +44,9 @@ SIZE 	= $(GCCPREFIX)size
 
 LDFLAGS = $(TARGET) -Wl,--gc-sections
 
-CCFLAGS = $(TARGET) $(INC) -c -O2 -Os  -s -Wall -Wextra -pedantic -std=c99 -nostdlib   -fdata-sections -ffunction-sections   -Wl,--gc-sections
-CXXFLAGS= $(TARGET) $(INC) -c -O2 -Os  -s -Wall -Wextra -pedantic -std=c++14 -fno-rtti  -fno-exceptions -fdata-sections -ffunction-sections  -Wl,--gc-sections
-LDFLAGS = -T$(LDSCRIPT) $(TARGET) -nostdlib -Wl,--gc-sections -lgcc 
+CCFLAGS = $(TARGET) $(INC) -c -O2 -Os -s -Wall -Wextra -std=c99 -nostdlib   -fdata-sections -ffunction-sections   -Wl,--gc-sections
+CXXFLAGS= $(TARGET) $(INC) -c -O2 -s -funroll-loops -Wall -Wextra -pedantic -std=c++14 -fno-rtti  -fno-exceptions -fdata-sections -ffunction-sections  -Wl,--gc-sections
+LDFLAGS = -T$(LDSCRIPT) $(TARGET) -nostdlib -Wl,--gc-sections 
 
 
 C_OBJS 		= $(C_SRCS:.c=.o)

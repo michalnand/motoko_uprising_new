@@ -12,10 +12,10 @@
 
 MEMORY
 {
-    flash (rx) : ORIGIN = 0x08000000, LENGTH = 512K
+    flash (rx) : ORIGIN = 0x08000000, LENGTH = 256K
     ram  (rwx) : ORIGIN = 0x20000000, LENGTH = 256K
 }
-
+ 
 ENTRY(Reset_Handler)
 
 /*
@@ -61,7 +61,7 @@ SECTIONS
         /* Static constructors and destructors */
         KEEP(*(.init))
         KEEP(*(.fini))
-    
+
         . = ALIGN(4);
         _etext = .;
     } >flash
@@ -94,21 +94,23 @@ SECTIONS
      */
     .preinit_array :
     {
-        __preinit_array_start = .;
-        *(SORT(.__preinit_array_start.*))
-        __preinit_array_end = .;
+        PROVIDE_HIDDEN(__preinit_array_start = .);
+        KEEP(*(.preinit_array*))
+        PROVIDE_HIDDEN(__preinit_array_end = .);
     } >flash
     .init_array :
     {
-        __init_array_start = .;
-        *(SORT(.init_array.*))
-        __init_array_end = .;
+        PROVIDE_HIDDEN(__init_array_start = .);
+        KEEP(*(SORT(.init_array.*)))
+        KEEP(*(.init_array*))
+        PROVIDE_HIDDEN(__init_array_end = .);
     } >flash
     .fini_array :
     {
-        __fini_array_start = .;
-        *(SORT(.fini_array.*))
-        __fini_array_end = .;
+        PROVIDE_HIDDEN(__fini_array_start = .);
+        KEEP(*(SORT(.fini_array.*)))
+        KEEP(*(.fini_array*))
+        PROVIDE_HIDDEN(__fini_array_end = .);
     } >flash
 
 
@@ -160,6 +162,6 @@ SECTIONS
 
 /* Nice to have */
 __isr_vector_size__ = SIZEOF(.isr_vector);
-__text_size__ = SIZEOF(.text);
-__data_size__ = SIZEOF(.data);
-__bss_size__ = SIZEOF(.bss);
+__text_size__       = SIZEOF(.text);
+__data_size__       = SIZEOF(.data);
+__bss_size__        = SIZEOF(.bss);

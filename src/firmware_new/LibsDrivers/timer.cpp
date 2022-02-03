@@ -61,6 +61,8 @@ void Timer::init(uint32_t frequency)
     //interrupt every 1ms
     SysTick_Config(SystemCoreClock/frequency);
     __enable_irq();
+
+    delay_ms(10);
 }
 
 int Timer::add_task(Thread *callback_class, unsigned int period_ms)

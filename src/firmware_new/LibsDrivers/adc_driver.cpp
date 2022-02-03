@@ -10,13 +10,6 @@ volatile uint16_t g_adc_result[ADC_CHANNELS_COUNT];
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-void AdcScanningDoneHandler() __attribute__ ((weak));
-
-void AdcScanningDoneHandler()
-{
-    //called when all conversions done done
-}
  
 void ADC_IRQHandler(void)
 {
@@ -24,18 +17,14 @@ void ADC_IRQHandler(void)
     g_adc_result[g_adc_current_idx] = ADC_GetConversionValue(ADC1);
 
     ADC_ClearITPendingBit(ADC1, ADC_IT_EOC);
+    //ADC1->SR = ~(uint32_t)(ADC_IT_EOC>>8);
 
     g_adc_current_idx = (g_adc_current_idx + 1)%ADC_CHANNELS_COUNT;
 
-    //callback call if cycle done
-    if (g_adc_current_idx == 0)
-    {
-        AdcScanningDoneHandler();
-    } 
-
-    //triger next conversion
-    ADC_RegularChannelConfig(ADC1, g_adc_channels[g_adc_current_idx], 1, ADC_SampleTime_480Cycles);
+    ADC_RegularChannelConfig(ADC1, g_adc_channels[g_adc_current_idx], 1, ADC_SampleTime_15Cycles);
+     
     ADC_SoftwareStartConv(ADC1);
+    //ADC1->CR2 |= (uint32_t)ADC_CR2_SWSTART;
 }
 
 #ifdef __cplusplus
@@ -105,7 +94,7 @@ void ADC_driver::init()
 
 
     ADC_InitTypeDef ADC_InitStruct;
-    ADC_InitStruct.ADC_ScanConvMode         =   DISABLE;
+    ADC_InitStruct.ADC_ScanConvMode         =   DISABLE; 
     ADC_InitStruct.ADC_Resolution           =   ADC_Resolution_12b;
     ADC_InitStruct.ADC_ContinuousConvMode   =   DISABLE;
     ADC_InitStruct.ADC_ExternalTrigConv     =   ADC_ExternalTrigConv_T1_CC1;
@@ -115,7 +104,9 @@ void ADC_driver::init()
 
     ADC_Init(ADC1, &ADC_InitStruct);
 
-    ADC_RegularChannelConfig(ADC1, g_adc_channels[0], 1, ADC_SampleTime_15Cycles);
+    ADC_RegularChannelConfig(ADC1, g_adc_channels[0], 1, ADC_SampleTime_480Cycles);
+
+
     ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);
 
     ADC_Cmd(ADC1, ENABLE);
@@ -131,24 +122,9 @@ void ADC_driver::init()
 
     //start first conversion
     ADC_SoftwareStartConv(ADC1);
-}
+} 
 
-uint16_t* ADC_driver::read()
+uint16_t* ADC_driver::get()
 {
     return (uint16_t*)g_adc_result;
 }
-
-/*
-int ADC_driver::read_single(unsigned int channel)
-{
-    ADC_RegularChannelConfig(ADC1, channel, 1, ADC_SampleTime_15Cycles);
-    ADC_SoftwareStartConv(ADC1);
-
-    while (!ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC))
-    { 
-
-    }
-
-    return ADC_GetConversionValue(ADC1);
-}
-*/

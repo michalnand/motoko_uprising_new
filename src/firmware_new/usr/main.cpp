@@ -1,86 +1,53 @@
 #include "device.h"
 #include <clock.h>
-#include <terminal.h>
-#include <timer.h>
 #include <gpio.h>
-#include <adc_driver.h>
+#include <low_level_drivers.h>
+ 
+#define LED_GPIO        TGPIOD
+#define LED_PIN         0
 
-
-volatile uint32_t adc_readings;
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-
-void AdcScanningDoneHandler()
-{
-  adc_readings++;
-}
-
-#ifdef __cplusplus
-}
-#endif
-
-
-int main(void)
-{
-  SetSysClock(SysClok216_24HSE);
-  //SetSysClock(SysClok312_24HSE); 
-
-  Gpio<TGPIOI, 1, GPIO_MODE_OUT> led;
-  led = 1; 
-    
-  Terminal terminal;
-  terminal.init(115200, USART1);
-
-  terminal << "\n\n\n";
-  terminal << "\nstarting\n";
-  terminal << "system clock = " << SystemCoreClock/1000000 << "MHz\n";
-
+#define KEY_GPIO        TGPIOC
+#define KEY_PIN         12
   
-  Timer timer;
-  timer.init();
+  
+        
+int main(void) 
+{
+  SetSysClock(SysClok216_8HSE);
 
-  terminal << "timer init [done]\n";
+  Gpio<LED_GPIO, LED_PIN, GPIO_MODE_OUT> led;        //user led
+  led = 1;
 
+  low_level_drivers.init(); 
 
-  adc_readings = 0;
-
-  ADC_driver adc;
-  adc.init();
-
-  terminal << "adc init [done]\n";
-
-  uint32_t time_prev = timer.get_time();
-  uint32_t time_now = time_prev;
-
+  terminal << "machine ready\n\n";
+  
+  Gpio<KEY_GPIO, KEY_PIN, GPIO_MODE_IN_PULLUP> key;  //user button
+  Gpio<TGPIOE, 14, GPIO_MODE_OUT> sensor_led;        //sensor white led
+ 
+  sensor_led  = 1; 
+   
   while (1)
   {
+
     led = 1; 
     timer.delay_ms(100);
 
     led = 0; 
     timer.delay_ms(900);
 
-    time_prev = time_now;
-    time_now  = timer.get_time();
-
     terminal << "conversion result \n";
 
     for (unsigned int i = 0; i < ADC_CHANNELS_COUNT; i++)
     {
-      terminal << adc.read()[i] << " ";
+      terminal << adc_driver.get()[i] << " ";
     }
-
     terminal << "\n";
-    terminal << "conversions rate " << adc_readings*1.0/timer.get_time() << " kSamples/s\n";
-
     terminal << "time = " << timer.get_time() << "\n";
 
-    terminal << "\n\n\n";
-    
+    terminal << "\n\n\n";    
   }
+  
 
-    return 0;
+  return 0;
 } 

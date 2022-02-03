@@ -269,7 +269,7 @@ void Reset_Handler(void)
     while(len--) 
     {
         *to++ = *fr++;
-    }
+    }  
 
     // enable FPU
     SCB->CPACR|= (1<<20)|(1<<21)|(1<<22)|(1<<23);   //full access
@@ -278,14 +278,14 @@ void Reset_Handler(void)
     //turn on cache
     SCB_EnableICache();
 	SCB_EnableDCache();
-
+    
     //call global constructors
     void (**p)() = &__init_array_start;
     for (int i = 0; i < (&__init_array_end - &__init_array_start); i++)
     { 
         p[i]();
     }
-
+    
     main();
 }
 

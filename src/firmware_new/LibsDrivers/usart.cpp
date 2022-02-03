@@ -1,6 +1,5 @@
 #include "usart.h"
 #include "gpio.h"
-#include <device.h>
 
 
 Usart::Usart()
@@ -8,6 +7,10 @@ Usart::Usart()
   
 }
 
+Usart::~Usart()
+{
+
+}
 
 void Usart::init(unsigned int baudrate, USART_TypeDef *usart)
 {
@@ -15,11 +18,11 @@ void Usart::init(unsigned int baudrate, USART_TypeDef *usart)
 
     if (usart == USART1)
     {
-      //Gpio<TGPIOA, 9, GPIO_MODE_AF>  usart_tx_pin;
-      //Gpio<TGPIOA, 10, GPIO_MODE_AF> usart_rx_pin;
-
       Gpio<TGPIOA, 9, GPIO_MODE_AF>  usart_tx_pin;
-      Gpio<TGPIOA, 7, GPIO_MODE_AF> usart_rx_pin;
+      Gpio<TGPIOA, 10, GPIO_MODE_AF> usart_rx_pin;
+
+      //Gpio<TGPIOA, 9, GPIO_MODE_AF>  usart_tx_pin;
+      //Gpio<TGPIOA, 7, GPIO_MODE_AF> usart_rx_pin;
 
       usart_tx_pin.af_config(((uint8_t)0x07)); //AF7
       usart_rx_pin.af_config(((uint8_t)0x07)); //AF7
@@ -54,11 +57,7 @@ void Usart::init(unsigned int baudrate, USART_TypeDef *usart)
 
 } 
 
-Usart::~Usart()
-{
 
-
-}
 
 void Usart::put_char(char c)
 {

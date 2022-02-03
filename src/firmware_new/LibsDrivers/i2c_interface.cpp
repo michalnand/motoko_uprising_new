@@ -12,7 +12,7 @@ I2C_Interface::~I2C_Interface()
 
 }
 
-
+ 
 void I2C_Interface::write_reg(unsigned char dev_adr, unsigned char reg_adr, unsigned char value)
 {
   start();

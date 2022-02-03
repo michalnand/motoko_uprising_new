@@ -1,7 +1,7 @@
 #ifndef _ADC_DRIVER_H_
-#define _ADC_DRIVER_H_
+#define _ADC_DRIVER_H_ 
 
-#define ADC_CHANNELS_COUNT  ((uint32_t)8 + 3)
+#define ADC_CHANNELS_COUNT  ((uint32_t)(8 + 3))
 
 //sensor indices in order as readed into result
 #define IR_SENSOR_LINE_0                 ((unsigned int)0)    
@@ -41,8 +41,7 @@ class ADC_driver
         virtual ~ADC_driver();
 
         void init();
-        uint16_t* read();
-        uint32_t get_conversion();
+        uint16_t* get();
 };
 
 
