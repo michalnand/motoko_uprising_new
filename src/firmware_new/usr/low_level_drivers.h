@@ -4,12 +4,15 @@
 #include <gpio.h> 
 #include <device.h> 
 
+#include <thread.h>
+
 #include <terminal.h>
 #include <mem.h>
 #include <timer.h>
 #include <i2c.h>
 #include <adc_driver.h>
 #include <motor_driver.h>
+#include <encoder_driver.h>
 
 
 
@@ -29,6 +32,7 @@ extern Timer                        timer;
 extern TI2C<TGPIOD, 1, 2, 50>       i2c;
 extern ADC_driver                   adc_driver; 
 extern Motor_driver                 motor_driver;
+extern EncoderDriver                encoder_driver;
  
 
 #endif

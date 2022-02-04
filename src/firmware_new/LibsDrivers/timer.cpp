@@ -71,6 +71,8 @@ int Timer::add_task(Thread *callback_class, unsigned int period_ms)
     {
         __disable_irq();
 
+        period_ms = period_ms - 1;
+
         g_task_list[current_ptr].period           = period_ms;
         g_task_list[current_ptr].next_time_call   = g_time + period_ms;
         g_task_list[current_ptr].callback_class   = callback_class;

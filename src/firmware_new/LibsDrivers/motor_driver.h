@@ -3,7 +3,7 @@
 
 #include <gpio.h>
 
-#define MOTOR_SPEED_MAX         ((int)255)
+#define MOTOR_PWM_MAX         ((int)255)
 
 class Motor_driver
 {
@@ -20,8 +20,8 @@ class Motor_driver
         virtual ~Motor_driver();
         void init();
 
-        void run_left(int pwm);
-        void run_right(int pwm);
+        void left_set(int pwm);
+        void right_set(int pwm);
 
     private:
         void pwm_init();

@@ -7,6 +7,7 @@ Timer                       timer;
 TI2C<TGPIOD, 1, 2, 50>      i2c;
 ADC_driver                  adc_driver;
 Motor_driver                motor_driver;
+EncoderDriver               encoder_driver;
 
 
 LowLevel_drivers::LowLevel_drivers()
@@ -18,7 +19,7 @@ LowLevel_drivers::~LowLevel_drivers()
 {
 
 }
-
+ 
   
 int LowLevel_drivers::init()
 {
@@ -50,6 +51,10 @@ int LowLevel_drivers::init()
  
     terminal << "initializing motors \t\t";
     motor_driver.init();
+    terminal << "[done]\n";
+
+    terminal << "initializing encoders \t\t";
+    encoder_driver.init();
     terminal << "[done]\n";
 
     timer.delay_ms(100);     

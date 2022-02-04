@@ -65,13 +65,13 @@ void Motor_driver::init()
 
     TIM_CtrlPWMOutputs(TIM1, ENABLE);
 
-    run_left(0); 
-    run_right(0);
+    left_set(0); 
+    right_set(0);
 }
 
 
 
-void Motor_driver::run_left(int pwm)
+void Motor_driver::left_set(int pwm)
 {
     if (pwm > 0)
     {
@@ -81,15 +81,15 @@ void Motor_driver::run_left(int pwm)
     {
         left_way    = 0;
         pwm         = -pwm;
-    } 
+    }  
 
-    if (pwm > MOTOR_SPEED_MAX)
-        pwm = MOTOR_SPEED_MAX;
+    if (pwm > MOTOR_PWM_MAX)
+        pwm = MOTOR_PWM_MAX;
 
-    TIM1->CCR3 = (pwm*PWM_PERIOD)/MOTOR_SPEED_MAX;
+    TIM1->CCR3 = (pwm*PWM_PERIOD)/MOTOR_PWM_MAX;
 }
 
-void Motor_driver::run_right(int pwm)
+void Motor_driver::right_set(int pwm)
 {
     if (pwm > 0)
     {
@@ -101,8 +101,8 @@ void Motor_driver::run_right(int pwm)
         pwm = -pwm;
     }
   
-    if (pwm > MOTOR_SPEED_MAX)
-        pwm = MOTOR_SPEED_MAX;
+    if (pwm > MOTOR_PWM_MAX)
+        pwm = MOTOR_PWM_MAX;
 
-    TIM1->CCR2 = (pwm*PWM_PERIOD)/MOTOR_SPEED_MAX;
+    TIM1->CCR2 = (pwm*PWM_PERIOD)/MOTOR_PWM_MAX;
 }
