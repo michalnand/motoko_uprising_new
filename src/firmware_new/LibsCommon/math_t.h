@@ -143,31 +143,31 @@ void mat_vect_mul(DType *result, DType *mat, DType *vect,  DType *c, unsigned in
         c[M]      (or single col matrix vect[M, 1]), default nullptr
         result[M] (or single col matrix vect[M, 1])
 */
-template<class DType, unsigned int M, unsigned int K>
+template<class DType, unsigned int rows, unsigned int cols>
 void mat_vect_mul(DType *result, DType *mat, DType *vect, DType *c = nullptr)
 {
     if (c == nullptr)
     {
-        for (unsigned int m = 0; m < M; m++)
+        for (unsigned int m = 0; m < rows; m++)
         {
             result[m] = 0;
         }
     }
     else
     {   
-        for (unsigned int m = 0; m < M; m++)
+        for (unsigned int m = 0; m < rows; m++)
         {
             result[m] = c[m];
         }
     }
 
-    for (unsigned int k = 0; k < K; k++)    
+    for (unsigned int k = 0; k < cols; k++)    
     {
         //this loop can be unrolled M-times
         //vect[k] value is M-times resused
-        for (unsigned int m = 0; m < M; m++)
+        for (unsigned int m = 0; m < rows; m++)
         {
-            result[m]+= mat[m*K + k]*vect[k];
+            result[m]+= mat[m*cols + k]*vect[k];
         }
     }
 }

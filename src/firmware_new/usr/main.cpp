@@ -4,6 +4,9 @@
 #include <low_level_drivers.h>
 
 #include <motor_controll.h>
+
+#include <fmath.h>
+
  
 #define LED_GPIO        TGPIOD
 #define LED_PIN         0
@@ -96,6 +99,51 @@ void position_controll()
 }
 
 
+void identification(unsigned int total_steps)
+{
+
+  float brace = 78;
+
+
+  float values[] = {0.0, -0.2, -0.3, -0.35, -0.4, -0.45, 0.2, 0.3, 0.35, 0.4, 0.45};
+
+  float ul = 0.0;
+  float ur = 0.0; 
+
+  for (unsigned int step = 0; step < total_steps; step++)
+  {
+    if ((step%50) == 0)
+    {
+      ul = values[rand()%11];
+      ur = values[rand()%11];
+    }
+
+    auto left_speed     = encoder_driver.get_left_speed();
+    auto right_speed    = encoder_driver.get_right_speed();
+
+    auto left_position  = encoder_driver.get_left();
+    auto right_position = encoder_driver.get_right();
+
+    auto speed          = (left_speed + right_speed)/2.0;
+    auto angular_rate   = (right_speed - left_speed)/brace;
+    auto angle          = (right_position - left_position)/brace;
+
+    terminal << step << ", " << timer.get_time() << ", " << ul << ", " << ur << ", " ;
+    terminal << left_speed << ", " << right_speed << ", ";
+    terminal << left_position << ", " << left_position << ", ";
+    terminal << speed << ", " << angular_rate << ", " << angle << "\n";
+
+    timer.delay_ms(4);
+
+    motor_driver.left_set(ul*MOTOR_PWM_MAX);
+    motor_driver.right_set(ur*MOTOR_PWM_MAX);
+  }
+
+  motor_driver.left_set(0);
+  motor_driver.left_set(0);
+}
+
+
         
 int main(void) 
 {
@@ -110,8 +158,10 @@ int main(void)
   
   //Gpio<KEY_GPIO, KEY_PIN, GPIO_MODE_IN_PULLUP> key;  //user button
   //Gpio<TGPIOE, 14, GPIO_MODE_OUT> sensor_led;        //sensor white led
+
+  timer.delay_ms(1000);
   
-  position_controll();
+  identification(2000);
 
   while (1)
   {
